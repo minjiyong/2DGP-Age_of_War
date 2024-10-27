@@ -12,9 +12,19 @@ class Background:
     def update(self):
         pass
     def draw(self):
-        self.image.draw(512, 256, 1024, 512)
+        self.image.clip_draw(0, 0, 512, 256, 0, 0, 1536, 512)
     pass
 
+class Tower:
+    image = None
+    def __init__(self):
+        if self.image == None:
+            self.image = load_image('Resource/Buildings_BC/Mobile - The Battle Cats - Cat Base.png')
+        self.x, self.y = 60, 100
+    def update(self):
+        pass
+    def draw(self):
+        self.image.clip_composite_draw(0, 0, 165, 335, 0, 'h', self.x, self.y, 82, 167)
 
 def handle_events():
     global running
@@ -27,24 +37,30 @@ def handle_events():
 
 def update_world():
     background.update()
+    tower.update()
     pass
 
 def render_world():
     clear_canvas()
     background.draw()
+    tower.draw()
     update_canvas()
 
 def reset_world(): # 초기화하는 함수
     global running
     global background
+    global tower
     global world
 
     running = True
     world = []
     background = Background() # Grass 클래스를 이용해서 grass 객체 생성
     world.append(background)
+    tower = Tower()
+    world.append(tower)
 
-open_canvas(1024, 512)
+
+open_canvas(1536, 512)
 
 # initialization code
 reset_world()
