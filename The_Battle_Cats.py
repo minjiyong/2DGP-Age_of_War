@@ -12,7 +12,7 @@ class Background:
     def update(self):
         pass
     def draw(self):
-        self.image.clip_draw(0, 0, 512, 256, 0, 0, 1536, 512)
+        self.image.clip_draw(0, 0, 512, 256, 768, 256, 1536, 512)
     pass
 
 class Tower:
@@ -20,11 +20,12 @@ class Tower:
     def __init__(self):
         if self.image == None:
             self.image = load_image('Resource/Buildings_BC/Mobile - The Battle Cats - Cat Base.png')
-        self.x, self.y = 60, 100
+        self.x, self.y = 70, 120
     def update(self):
         pass
     def draw(self):
-        self.image.clip_composite_draw(0, 0, 165, 335, 0, 'h', self.x, self.y, 82, 167)
+        # 3/5 사이즈로 줄여서 출력
+        self.image.clip_composite_draw(0, 0, 165, 335, 0, 'h', self.x, self.y, 99, 201)
 
 def handle_events():
     global running
