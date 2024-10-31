@@ -1,6 +1,7 @@
 from pico2d import *
 from Backgrounds import Background
 from Tower_objects import Tower
+from Units import Cat
 import random
 
 
@@ -30,6 +31,7 @@ def reset_world(): # 초기화하는 함수
     global background
     global tower
     global world
+    global cats
 
     running = True
     world = []
@@ -39,6 +41,9 @@ def reset_world(): # 초기화하는 함수
 
     tower = Tower()
     world.append(tower)
+
+    team = [Cat() for i in range(1)]
+    world += team
 
 
 open_canvas(1536, 512)

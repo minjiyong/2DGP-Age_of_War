@@ -41,107 +41,44 @@ class Idle:
         boy.image.clip_draw(boy.frame * 100, boy.action * 100, 100, 100, boy.x, boy.y)
         pass
 
-class Sleep:
-    @staticmethod
-    def enter(boy, e):
-        if start_event(e):
-            boy.face_dir = 1
-            boy.action = 3
-        boy.frame = 0
-        pass
-    @staticmethod
-    def exit(boy, e):
-        pass
-    @staticmethod
-    def do(boy):
-        boy.frame = (boy.frame + 1) % 8
-        pass
-    @staticmethod
-    def draw(boy):
-        if boy.face_dir == 1:
-            boy.image.clip_composite_draw(boy.frame * 100, boy.action * 100, 100, 100, 3.141592/2, '', boy.x -25, boy.y -25, 100, 100)
-        else:
-            boy.image.clip_composite_draw(boy.frame * 100, boy.action * 100, 100, 100, -3.141592/2, '', boy.x -25, boy.y -25, 100, 100)
-        pass
-
-class Run:
-    @staticmethod
-    def enter(boy, e):
-        if right_down(e) or left_up(e):
-            boy.face_dir = 1
-            boy.action = 1
-            boy.dir = 1
-        elif left_down(e) or right_up(e):
-            boy.face_dir = -1
-            boy.action = 0
-            boy.dir = -1
-        boy.frame = 0
-        pass
-    @staticmethod
-    def exit(boy, e):
-        pass
-    @staticmethod
-    def do(boy):
-        boy.frame = (boy.frame + 1) % 8
-        boy.x += boy.dir * 3
-        pass
-    @staticmethod
-    def draw(boy):
-        boy.image.clip_draw(boy.frame * 100, boy.action * 100, 100, 100, boy.x, boy.y, 100, 100)
-        pass
-
 class AutoRun:
     @staticmethod
-    def enter(boy, e):
-        if a_down(e):
-            if boy.face_dir == 1:
-                boy.action = 1
-                boy.dir = 1
-            elif boy.face_dir == -1:
-                boy.action = 0
-                boy.dir = -1
-        boy.frame = 0
-        boy.start_time = get_time()
+    def enter(cat, e):
+        if start_event(e):
+            if not cat.enemy:
+                cat.dir = 1
+            elif cat.enemy:
+                cat.dir = -1
+        cat.frame = 0
         pass
     @staticmethod
-    def exit(boy, e):
+    def exit(cat, e):
         pass
     @staticmethod
-    def do(boy):
-        boy.frame = (boy.frame + 1) % 8
-        boy.x += boy.dir * 5
-        if boy.x < 0:
-            boy.face_dir = 1
-            boy.action = 1
-            boy.dir = 1
-        elif boy.x > WINDOW_WIDTH:
-            boy.face_dir = -1
-            boy.action = 0
-            boy.dir = -1
-
-        if get_time() - boy.start_time > 5:
-            boy.state_machine.add_event(('TIME_OUT', 0))
+    def do(cat):
+        cat.frame = (cat.frame + 1) % 3
+        cat.x += cat.dir * 2
         pass
     @staticmethod
-    def draw(boy):
-        boy.image.clip_draw(boy.frame * 100, boy.action * 100, 100, 100, boy.x, boy.y + 25, 200, 200)
+    def draw(cat):
+        cat.image.clip_draw(cat.frame * 100, cat.action * 100, 100, 100, cat.x, cat.y + 25, 100, 100)
         pass
 
-class Boy:
+class Cat:
+    image = None
     def __init__(self):
+        if self.image == None:
+            self.image = load_image('Resource/Units_BC/Mobile - The Battle Cats - Cat.png')
         self.x, self.y = 400, 90
         self.frame = 0
         self.dir = 0
         self.action = 3
-        self.image = load_image('animation_sheet.png')
+        self.enemy = False
         self.state_machine = StateMachine(self)      # 소년 객체를 위한 상태 머신임을 알려줌
-        self.state_machine.start(Idle)
+        self.state_machine.start(AutoRun)
         self.state_machine.set_transitions(
             {
-                Idle : {right_down: Run, left_down: Run, right_up: Run, left_up: Run, a_down:AutoRun, time_out: Sleep},
-                Run: {right_down: Idle, left_down: Idle, right_up: Idle, left_up: Idle, a_down:AutoRun},
-                Sleep : {right_down: Run, left_down: Run, right_up: Run, left_up: Run, space_down: Idle, a_down:AutoRun},
-                AutoRun : {right_down: Run, left_down: Run, right_up: Run, left_up: Run, time_out: Idle}
+                #AutoRun : {right_down: Run, left_down: Run, right_up: Run, left_up: Run, time_out: Idle}
             }
         )
 
