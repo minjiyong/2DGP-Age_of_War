@@ -42,8 +42,8 @@ def reset_world(): # 초기화하는 함수
     tower = Tower()
     world.append(tower)
 
-    team = [Cat() for i in range(1)]
-    world += team
+    cats = [Cat() for i in range(1)]
+    world += cats
 
 
 open_canvas(1536, 512)
@@ -56,7 +56,7 @@ while running:
     handle_events()
     update_world()
     render_world()
-    delay(0.01)
+    delay(0.05)
 
 
 # finalization code
