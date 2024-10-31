@@ -1,32 +1,10 @@
 from pico2d import *
+from Backgrounds import Background
+from Tower_objects import Tower
 import random
 
 
 # Game object class here
-class Background:
-    image = None
-    # 생성자를 이용해서 객체의 초기 상태를 정의 상태를 정의함
-    def __init__(self):
-        if self.image == None:
-            self.image = load_image('Resource/backgrounds/Hills Free (update 3.0).png')
-    def update(self):
-        pass
-    def draw(self):
-        self.image.clip_draw(0, 0, 512, 256, 768, 256, 1536, 512)
-    pass
-
-class Tower:
-    image = None
-    def __init__(self):
-        if self.image == None:
-            self.image = load_image('Resource/Buildings_BC/Mobile - The Battle Cats - Cat Base.png')
-        self.x, self.y = 70, 120
-    def update(self):
-        pass
-    def draw(self):
-        # 3/5 사이즈로 줄여서 출력
-        self.image.clip_composite_draw(0, 0, 165, 335, 0, 'h', self.x, self.y, 99, 201)
-
 def handle_events():
     global running
     events = get_events()
