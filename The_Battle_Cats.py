@@ -15,14 +15,14 @@ def handle_events():
             running = False
 
 def update_world():
-    background.update()
-    tower.update()
+    for o in world:
+        o.update()
     pass
 
 def render_world():
     clear_canvas()
-    background.draw()
-    tower.draw()
+    for o in world:
+        o.draw()
     update_canvas()
 
 def reset_world(): # 초기화하는 함수
@@ -33,8 +33,10 @@ def reset_world(): # 초기화하는 함수
 
     running = True
     world = []
+
     background = Background() # Grass 클래스를 이용해서 grass 객체 생성
     world.append(background)
+
     tower = Tower()
     world.append(tower)
 
@@ -49,7 +51,7 @@ while running:
     handle_events()
     update_world()
     render_world()
-    delay(0.05)
+    delay(0.01)
 
 
 # finalization code
