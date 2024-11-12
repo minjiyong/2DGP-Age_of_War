@@ -1,18 +1,18 @@
-from pygame.examples.grid import WINDOW_WIDTH
-
 import game_framework
+import game_world
 from state_machine import StateMachine, space_down, time_out, right_down, left_down, right_up, left_up, start_event, \
     a_down
 from pico2d import *
 
-# Boy Run Speed
+
+# default 아군 Run speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
 RUN_SPEED_KMPH = 8.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
-# Boy Action Speed
+# default 아군 Action Speed
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 8
@@ -20,56 +20,60 @@ FRAMES_PER_ACTION = 8
 
 class Attack:
     @staticmethod
-    def enter(cat, e):
+    def enter(unit, e):
         if start_event(e):
             pass
-        cat.frame = 0
+        unit.frame = 0
         pass
     @staticmethod
-    def exit(cat, e):
+    def exit(unit, e):
         pass
     @staticmethod
-    def do(cat):
-        cat.frame = (cat.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 4
+    def do(unit):
+        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 4
         pass
     @staticmethod
-    def draw(cat):
-        cat.image.clip_composite_draw(int(cat.frame) * 47, 166, 47, 55, 0, 'h', cat.x, cat.y, 50, 50)
+    def draw(unit):
+        unit.image.clip_composite_draw(int(unit.frame) * 47, 166, 47, 55, 0, 'h', unit.x, unit.y, 50, 50)
         pass
 
 class AutoRun:
     @staticmethod
-    def enter(cat, e):
+    def enter(unit, e):
         if start_event(e):
-            if not cat.enemy:
-                cat.dir = 1
-            elif cat.enemy:
-                cat.dir = -1
-        cat.frame = 0
+            if not unit.enemy:
+                unit.dir = 1
+            elif unit.enemy:
+                unit.dir = -1
+        unit.frame = 0
         pass
     @staticmethod
-    def exit(cat, e):
+    def exit(unit, e):
         pass
     @staticmethod
-    def do(cat):
-        cat.frame = (cat.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
-        cat.x += cat.dir * RUN_SPEED_PPS * game_framework.frame_time
+    def do(unit):
+        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
+        unit.x += unit.dir * RUN_SPEED_PPS * game_framework.frame_time
         pass
     @staticmethod
-    def draw(cat):
-        cat.image.clip_composite_draw(int(cat.frame) * 50, 242, 50, 50, 0, 'h', cat.x, cat.y, 50, 50)
+    def draw(unit):
+        unit.image.clip_composite_draw(int(unit.frame) * 112, 154, 112, 102, 0, 'h', unit.x, unit.y, 112, 102)
         pass
 
-class Cat:
+
+
+# 적군 유닛
+class Hippo:
     image = None
     def __init__(self):
         if self.image == None:
-            self.image = load_image('Resource/Units_BC/Mobile - The Battle Cats - Cat.png')
-        self.x, self.y = 80, 45
+            self.image = load_image('Resource/Units_Enemy/Mobile - The Battle Cats - Hippoe.png')
+        self.x, self.y = 1500, 70
         self.frame = 0
         self.dir = 1
         self.action = 3
-        self.enemy = False
+        self.enemy = True
+        self.range = 20
         self.state_machine = StateMachine(self)      # 소년 객체를 위한 상태 머신임을 알려줌
         self.state_machine.start(AutoRun)
         self.state_machine.set_transitions(
@@ -83,9 +87,15 @@ class Cat:
 
     def handle_event(self, event):
         self.state_machine.add_event( ('INPUT', event) )
-        pass
 
     def draw(self):
         self.state_machine.draw()
+        # 충돌영역 그리기
+        draw_rectangle(*self.get_bb())
+        draw_rectangle(*self.get_attack_bb())
 
+    def get_bb(self):
+        return self.x-53, self.y-51, self.x+53, self.y+31
 
+    def get_attack_bb(self):
+        return self.x - 53 - self.range, self.y - 51, self.x - 53, self.y + 15

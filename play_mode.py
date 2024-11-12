@@ -5,8 +5,9 @@ import game_framework
 
 import game_world
 from Backgrounds import Background
+from Hippo import Hippo
 from Tower_objects import Tower
-from Units import Cat
+from Cat import Cat
 
 
 def handle_events():
@@ -26,9 +27,13 @@ def init():
     tower = Tower()
     game_world.add_object(tower, 1)
 
-    global cats
-    cats = [Cat() for _ in range(1)]
-    game_world.add_objects(cats, 1)
+    global BC
+    BC = [Cat() for _ in range(1)]
+    game_world.add_objects(BC, 1)
+
+    global Enemy
+    Enemy = [Hippo() for _ in range(1)]
+    game_world.add_objects(Enemy, 1)
 
 
     #game_world.add_collision_pair('boy:ball', boy, None)
