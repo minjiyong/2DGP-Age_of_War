@@ -27,16 +27,18 @@ def init():
     tower = Tower()
     game_world.add_object(tower, 1)
 
-    global BC
-    BC = [Cat() for _ in range(1)]
-    game_world.add_objects(BC, 1)
+    global BCs
+    BCs = [Cat() for _ in range(1)]
+    game_world.add_objects(BCs, 1)
 
-    global Enemy
-    Enemy = [Hippo() for _ in range(1)]
-    game_world.add_objects(Enemy, 1)
+    global Enemys
+    Enemys = [Hippo() for _ in range(1)]
+    game_world.add_objects(Enemys, 1)
 
-
-    #game_world.add_collision_pair('boy:ball', boy, None)
+    for bc in BCs:
+        game_world.add_collision_pair('BC:Enemy', bc, None)
+    for enemy in Enemys:
+        game_world.add_collision_pair('BC:Enemy', None, enemy)
 
 
 def finish():

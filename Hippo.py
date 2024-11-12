@@ -1,7 +1,7 @@
 import game_framework
 import game_world
 from state_machine import StateMachine, space_down, time_out, right_down, left_down, right_up, left_up, start_event, \
-    a_down
+    a_down, collision
 from pico2d import *
 
 
@@ -34,7 +34,7 @@ class Attack:
         pass
     @staticmethod
     def draw(unit):
-        unit.image.clip_composite_draw(int(unit.frame) * 47, 166, 47, 55, 0, 'h', unit.x, unit.y, 50, 50)
+        unit.image.clip_composite_draw(int(unit.frame) * 112, 52, 112, 102, 0, 'h', unit.x, unit.y, 112, 102)
         pass
 
 class AutoRun:
@@ -68,17 +68,17 @@ class Hippo:
     def __init__(self):
         if self.image == None:
             self.image = load_image('Resource/Units_Enemy/Mobile - The Battle Cats - Hippoe.png')
-        self.x, self.y = 1500, 70
+        self.x, self.y = 450, 70
         self.frame = 0
         self.dir = 1
-        self.action = 3
         self.enemy = True
         self.range = 20
         self.state_machine = StateMachine(self)      # 소년 객체를 위한 상태 머신임을 알려줌
         self.state_machine.start(AutoRun)
         self.state_machine.set_transitions(
             {
-                #AutoRun : {right_down: Run, left_down: Run, right_up: Run, left_up: Run, time_out: Idle}
+                AutoRun : {collision: Attack},
+                Attack: {time_out: AutoRun}
             }
         )
 
@@ -99,3 +99,7 @@ class Hippo:
 
     def get_attack_bb(self):
         return self.x - 53 - self.range, self.y - 51, self.x - 53, self.y + 15
+
+    def handle_collision(self, group, other):
+        if group == 'BC:Enemy':
+            self.state_machine.add_event(('MEET_OTHER_TEAM', 0))

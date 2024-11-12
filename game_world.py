@@ -51,7 +51,7 @@ def clear():
 # fill here
 def collide(a, b):
     al,ab,ar,at = a.get_bb()
-    bl,bb,br,bt = b.get_bb()
+    bl,bb,br,bt = b.get_attack_bb()
 
     if ar < bl: return False
     if al > br: return False
@@ -70,4 +70,6 @@ def handle_collisions():
                 if collide(a, b):
                     print(f'{group} collide')
                     a.handle_collision(group, b)
+                if collide(b, a):
+                    print(f'{group} collide')
                     b.handle_collision(group, a)

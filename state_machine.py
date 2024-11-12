@@ -22,9 +22,13 @@ def left_up(e):
 
 def a_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_a
-# 만들어야 되는 상태 목록
-# 체력이 0이 됐을 때 - 사망
 # 적을 만났을 때 - 공격
+def collision(e):
+    return e[0] == 'MEET_OTHER_TEAM'
+# 체력이 0이 됐을 때 - 사망
+def death(e):
+    return e[0] == 'DEATH'
+# 만들어야 되는 상태 목록
 
 # 상태 머신을 처리, 관리해주는 클래스
 class StateMachine:

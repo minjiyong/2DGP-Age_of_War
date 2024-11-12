@@ -1,7 +1,7 @@
 import game_framework
 import game_world
 from state_machine import StateMachine, space_down, time_out, right_down, left_down, right_up, left_up, start_event, \
-    a_down
+    a_down, collision
 from pico2d import *
 
 # default 아군 Run speed
@@ -69,14 +69,14 @@ class Cat:
         self.x, self.y = 80, 45
         self.frame = 0
         self.dir = 1
-        self.action = 3
         self.enemy = False
         self.range = 20
         self.state_machine = StateMachine(self)      # 소년 객체를 위한 상태 머신임을 알려줌
         self.state_machine.start(AutoRun)
         self.state_machine.set_transitions(
             {
-                #AutoRun : {right_down: Run, left_down: Run, right_up: Run, left_up: Run, time_out: Idle}
+                AutoRun : {collision: Attack},
+                Attack: {time_out: AutoRun}
             }
         )
 
@@ -99,8 +99,5 @@ class Cat:
         return self.x + 21, self.y - 20, self.x + 21 + self.range, self.y + 10
 
     def handle_collision(self, group, other):
-        if group == 'boy:ball':
-            self.ball_count += 1
-        if group == 'boy:zombie':
-            game_world.remove_object(self)
-            game_framework.quit()
+        if group == 'BC:Enemy':
+            self.state_machine.add_event(('MEET_OTHER_TEAM', 0))
