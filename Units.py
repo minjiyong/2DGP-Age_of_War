@@ -1,8 +1,21 @@
 from pygame.examples.grid import WINDOW_WIDTH
 
+import game_framework
 from state_machine import StateMachine, space_down, time_out, right_down, left_down, right_up, left_up, start_event, \
     a_down
 from pico2d import *
+
+# Boy Run Speed
+PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+RUN_SPEED_KMPH = 8.0  # Km / Hour
+RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+# Boy Action Speed
+TIME_PER_ACTION = 0.5
+ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+FRAMES_PER_ACTION = 8
 
 
 class Attack:
@@ -17,11 +30,11 @@ class Attack:
         pass
     @staticmethod
     def do(cat):
-        cat.frame = (cat.frame + 1) % 4
+        cat.frame = (cat.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 4
         pass
     @staticmethod
     def draw(cat):
-        cat.image.clip_composite_draw(cat.frame * 47, 166, 47, 55, 0, 'h', cat.x, cat.y, 50, 50)
+        cat.image.clip_composite_draw(int(cat.frame) * 47, 166, 47, 55, 0, 'h', cat.x, cat.y, 50, 50)
         pass
 
 class AutoRun:
@@ -39,12 +52,12 @@ class AutoRun:
         pass
     @staticmethod
     def do(cat):
-        cat.frame = (cat.frame + 1) % 3
-        cat.x += cat.dir * 2
+        cat.frame = (cat.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
+        cat.x += cat.dir * RUN_SPEED_PPS * game_framework.frame_time
         pass
     @staticmethod
     def draw(cat):
-        cat.image.clip_composite_draw(cat.frame * 50, 242, 50, 50, 0, 'h', cat.x, cat.y, 50, 50)
+        cat.image.clip_composite_draw(int(cat.frame) * 50, 242, 50, 50, 0, 'h', cat.x, cat.y, 50, 50)
         pass
 
 class Cat:
@@ -58,7 +71,7 @@ class Cat:
         self.action = 3
         self.enemy = False
         self.state_machine = StateMachine(self)      # 소년 객체를 위한 상태 머신임을 알려줌
-        self.state_machine.start(Attack)
+        self.state_machine.start(AutoRun)
         self.state_machine.set_transitions(
             {
                 #AutoRun : {right_down: Run, left_down: Run, right_up: Run, left_up: Run, time_out: Idle}
