@@ -30,6 +30,8 @@ class Attack:
     @staticmethod
     def do(unit):
         unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 4
+        if unit.hp < 0:
+            game_world.remove_object(unit)
         pass
     @staticmethod
     def draw(unit):
@@ -53,6 +55,8 @@ class AutoRun:
     def do(unit):
         unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
         unit.x += unit.dir * RUN_SPEED_PPS * game_framework.frame_time
+        if unit.hp < 0:
+            game_world.remove_object(unit)
         pass
     @staticmethod
     def draw(unit):
@@ -70,6 +74,8 @@ class Cat:
         self.frame = 0
         self.dir = 1
         self.enemy = False
+        self.hp = 120
+        self.attack = 96
         self.range = 20
         self.state_machine = StateMachine(self)      # 소년 객체를 위한 상태 머신임을 알려줌
         self.state_machine.start(AutoRun)
@@ -100,4 +106,8 @@ class Cat:
 
     def handle_collision(self, group, other):
         if group == 'BC:Enemy':
+            other.take_damage(self.attack)
             self.state_machine.add_event(('MEET_OTHER_TEAM', 0))
+
+    def take_damage(self, attack):
+        self.hp -= attack
