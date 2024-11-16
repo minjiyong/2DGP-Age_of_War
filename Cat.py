@@ -106,8 +106,9 @@ class Cat:
 
     def handle_collision(self, group, other):
         if group == 'BC:Enemy':
-            other.take_damage(self.attack)
             self.state_machine.add_event(('MEET_OTHER_TEAM', 0))
+            if int(self.frame) == 3:
+                other.take_damage(self.attack)
 
     def take_damage(self, attack):
         self.hp -= attack
