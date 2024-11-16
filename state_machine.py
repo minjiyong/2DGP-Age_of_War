@@ -11,20 +11,11 @@ def space_down(e):
 def time_out(e):
     return e[0] == 'TIME_OUT'
 
-def right_down(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_RIGHT
-def right_up(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_RIGHT
-def left_down(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_LEFT
-def left_up(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_LEFT
-
-def a_down(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_a
 # 적을 만났을 때 - 공격
 def collision(e):
     return e[0] == 'MEET_OTHER_TEAM'
+def non_collision(e):
+    return e[0] == 'NOTHING_COLLIDE'
 # 체력이 0이 됐을 때 - 사망
 def death(e):
     return e[0] == 'DEATH'

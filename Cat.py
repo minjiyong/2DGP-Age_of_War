@@ -1,7 +1,6 @@
 import game_framework
 import game_world
-from state_machine import StateMachine, space_down, time_out, right_down, left_down, right_up, left_up, start_event, \
-    a_down, collision
+from state_machine import *
 from pico2d import *
 
 # default 아군 Run speed
@@ -23,6 +22,7 @@ class Attack:
         if start_event(e):
             pass
         unit.frame = 0
+        unit.wait_time = get_time()
         pass
     @staticmethod
     def exit(unit, e):
@@ -32,6 +32,8 @@ class Attack:
         unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 4
         if unit.hp < 0:
             game_world.remove_object(unit)
+        if get_time() - unit.wait_time > 1:
+            unit.state_machine.add_event(('TIME_OUT', 0))
         pass
     @staticmethod
     def draw(unit):
@@ -77,12 +79,14 @@ class Cat:
         self.hp = 120
         self.attack = 96
         self.range = 20
+        self.last_attack_time = 0  # 마지막 공격 시간을 저장
+        self.attack_cooldown = 0.5  # 0.5초 간격으로만 공격 가능
         self.state_machine = StateMachine(self)      # 소년 객체를 위한 상태 머신임을 알려줌
         self.state_machine.start(AutoRun)
         self.state_machine.set_transitions(
             {
                 AutoRun : {collision: Attack},
-                Attack: {time_out: AutoRun}
+                Attack: {non_collision: AutoRun, time_out: AutoRun}
             }
         )
 
@@ -106,9 +110,14 @@ class Cat:
 
     def handle_collision(self, group, other):
         if group == 'BC:Enemy':
+            current_time = get_time()
             self.state_machine.add_event(('MEET_OTHER_TEAM', 0))
-            if int(self.frame) == 3:
+            if current_time - self.last_attack_time > self.attack_cooldown:
                 other.take_damage(self.attack)
+                self.last_attack_time = current_time
+
+    def nothing_collide(self):
+        self.state_machine.add_event(('NOTHING_COLLIDE', 0))
 
     def take_damage(self, attack):
         self.hp -= attack

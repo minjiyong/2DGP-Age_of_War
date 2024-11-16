@@ -8,6 +8,7 @@ from Backgrounds import Background
 from Hippo import Hippo
 from Tower_objects import Tower
 from Cat import Cat
+from temp_BC import Temp_BC
 
 
 def handle_events():
@@ -27,18 +28,25 @@ def init():
     tower = Tower()
     game_world.add_object(tower, 1)
 
+    global temp_BC
+    temp_BC = Temp_BC(-100, -100)
+    game_world.add_object(temp_BC,1 )
+
+    global temp_Enemy
+    temp_Enemy = Temp_BC(1700, -100)
+    game_world.add_object(temp_Enemy, 1)
+
     global BCs
-    BCs = [Cat() for _ in range(1)]
-    game_world.add_objects(BCs, 1)
+    BCs = Cat()
+    game_world.add_object(BCs, 1)
 
     global Enemys
-    Enemys = [Hippo() for _ in range(1)]
-    game_world.add_objects(Enemys, 1)
+    Enemys = Hippo()
+    game_world.add_object(Enemys, 1)
 
-    for bc in BCs:
-        game_world.add_collision_pair('BC:Enemy', bc, None)
-    for enemy in Enemys:
-        game_world.add_collision_pair('BC:Enemy', None, enemy)
+
+    game_world.add_collision_pair('BC:Enemy', BCs, None)
+    game_world.add_collision_pair('BC:Enemy', None, Enemys)
 
 
 def finish():
