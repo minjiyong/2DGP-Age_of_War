@@ -32,7 +32,7 @@ class Attack:
         unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 4
         if unit.hp < 0:
             game_world.remove_object(unit)
-        if get_time() - unit.wait_time > 1:
+        if get_time() - unit.wait_time > 1.5:
             unit.state_machine.add_event(('TIME_OUT', 0))
         pass
     @staticmethod
@@ -76,7 +76,7 @@ class Cat:
         self.frame = 0
         self.dir = 1
         self.enemy = False
-        self.hp = 120
+        self.hp = 12000
         self.attack = 96
         self.range = 20
         self.last_attack_time = 0  # 마지막 공격 시간을 저장

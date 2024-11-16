@@ -33,7 +33,7 @@ class Attack:
         unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 4
         if unit.hp < 0:
             game_world.remove_object(unit)
-        if get_time() - unit.wait_time > 1:
+        if get_time() - unit.wait_time > 1.5:
             unit.state_machine.add_event(('TIME_OUT', 0))
         pass
     @staticmethod
