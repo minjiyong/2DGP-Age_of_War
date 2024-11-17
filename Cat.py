@@ -5,7 +5,7 @@ from pico2d import *
 
 # default 아군 Run speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-RUN_SPEED_KMPH = 8.0  # Km / Hour
+RUN_SPEED_KMPH = 6.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -79,7 +79,7 @@ class Cat:
         self.dir = 1
         self.enemy = False
         self.hp = 120
-        self.attack = 96
+        self.attack = 56
         self.range = 20
         self.last_attack_time = 0  # 마지막 공격 시간을 저장
         self.attack_cooldown = 0.5  # 0.5초 간격으로만 공격 가능
@@ -116,7 +116,7 @@ class Cat:
         return self.x-25, self.y-20, self.x+21, self.y+20
 
     def get_attack_bb(self):
-        return self.x + 22, self.y - 20, self.x + 21 + self.range, self.y + 10
+        return self.x + 21, self.y - 20, self.x + 21 + self.range, self.y + 10
 
     def handle_collision(self, group, other):
         if group == 'BC:Enemy':
