@@ -74,6 +74,7 @@ class Hippo:
     def __init__(self):
         if self.image == None:
             self.image = load_image('Resource/Units_Enemy/Mobile - The Battle Cats - Hippoe.png')
+        self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 12)
         self.x, self.y = 1450, 70
         self.frame = 0
         self.dir = 1
@@ -104,6 +105,14 @@ class Hippo:
         draw_rectangle(*self.get_bb())
         draw_rectangle(*self.get_attack_bb())
 
+        x, y = self.x - 25, self.y + 40
+        text = f'Hp: {self.hp}'
+        self.font.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
+        self.font.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
+        self.font.draw(x, y - 1, text, (0, 0, 0))  # 아래
+        self.font.draw(x, y + 1, text, (0, 0, 0))  # 위
+        self.font.draw(x, y, text, (255, 112, 0))
+
     def get_bb(self):
         return self.x-53, self.y-51, self.x+53, self.y+31
 
@@ -112,8 +121,8 @@ class Hippo:
 
     def handle_collision(self, group, other):
         if group == 'BC:Enemy':
-            current_time = get_time()
             self.state_machine.add_event(('MEET_OTHER_TEAM', 0))
+            current_time = get_time()
             if current_time - self.last_attack_time > self.attack_cooldown:
                 other.take_damage(self.attack)
                 self.last_attack_time = current_time
