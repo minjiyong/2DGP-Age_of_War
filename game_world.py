@@ -68,12 +68,8 @@ def handle_collisions():
         for a in pairs[0]:
             for b in pairs[1]:
                 if collide(a, b):
-                    print(f'{group} collide')
                     a.handle_collision(group, b)
-                else:
-                    b.nothing_collide()
-                if collide(b, a):
-                    print(f'{group} collide')
                     b.handle_collision(group, a)
                 else:
                     a.nothing_collide()
+                    b.nothing_collide()

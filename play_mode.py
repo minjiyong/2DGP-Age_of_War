@@ -8,20 +8,21 @@ from Backgrounds import Background
 from Hippo import Hippo
 from Tower_objects import Tower
 from Cat import Cat
+from UnitManager import UnitManager
 
 
 def handle_events():
-    events = get_events()
-    for event in events:
-        if event.type == SDL_QUIT:
-            game_framework.quit()
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            game_framework.quit()
+    unitmanager.handle_event()
+
 
 def init():
     global background
     background = Background()
     game_world.add_object(background, 0)
+
+    global unitmanager
+    unitmanager = UnitManager()
+    game_world.add_object(unitmanager, 0)
 
     global tower
     tower = Tower()

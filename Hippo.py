@@ -74,7 +74,7 @@ class Hippo:
     def __init__(self):
         if self.image == None:
             self.image = load_image('Resource/Units_Enemy/Mobile - The Battle Cats - Hippoe.png')
-        self.x, self.y = 450, 70
+        self.x, self.y = 1450, 70
         self.frame = 0
         self.dir = 1
         self.enemy = True

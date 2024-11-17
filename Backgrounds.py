@@ -9,6 +9,6 @@ class Background:
     def update(self):
         pass
     def draw(self):
-        self.image.clip_draw(0, 0, 512, 256, 768, 256, 1536, 512)
+        self.image.clip_draw(0, 0, 512, 256, 768, 300, 1536, 600)
     pass
 
