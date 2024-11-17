@@ -49,27 +49,37 @@ def clear():
 
 
 # fill here
-def collide(a, b):
-    al,ab,ar,at = a.get_bb()
-    bl,bb,br,bt = b.get_attack_bb()
+def collide(a, b, attack=False):
+    """
+    두 객체 a와 b의 충돌을 확인하는 함수.
+    - attack: True인 경우 공격 박스 기준으로 충돌 검사.
+    """
+    if attack:
+        al, ab, ar, at = a.get_attack_bb()  # a의 공격 범위 박스
+    else:
+        al, ab, ar, at = a.get_bb()  # a의 피격 범위 박스
 
-    if ar < bl: return False
-    if al > br: return False
-    if at < bb: return False
-    if ab > bt: return False
+    bl, bb, br, bt = b.get_bb()  # b의 피격 범위 박스
+
+    # 충돌하지 않는 조건들
+    if ar < bl or al > br or at < bb or ab > bt:
+        return False
 
     return True
-    pass
 
 
 def handle_collisions():
-    # 게임월드에 등록된 충돌 정보를 바탕으로, 실제 충돌 검사를 수행.
+    """
+    게임 월드에 등록된 충돌 정보를 바탕으로 실제 충돌 검사를 수행.
+    """
     for group, pairs in collision_pairs.items():
         for a in pairs[0]:
+            collided = False
             for b in pairs[1]:
-                if collide(a, b):
-                    a.handle_collision(group, b)
-                    b.handle_collision(group, a)
-                else:
-                    a.nothing_collide()
-                    b.nothing_collide()
+                if collide(a, b, attack=True):  # 공격 범위 충돌 검사
+                    a.handle_collision(group, b)  # 공격 충돌 처리
+                    b.handle_collision(group, a)  # 피격 처리
+                    collided = True
+
+            if not collided:  # 충돌이 발생하지 않았을 때
+                a.nothing_collide()  # 충돌하지 않은 경우 처리

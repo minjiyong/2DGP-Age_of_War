@@ -75,7 +75,7 @@ class Hippo:
         if self.image == None:
             self.image = load_image('Resource/Units_Enemy/Mobile - The Battle Cats - Hippoe.png')
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 12)
-        self.x, self.y = 1450, 70
+        self.x, self.y = 450, 70
         self.frame = 0
         self.dir = 1
         self.enemy = True

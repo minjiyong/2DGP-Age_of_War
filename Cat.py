@@ -56,6 +56,7 @@ class AutoRun:
     @staticmethod
     def do(unit):
         unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
+
         unit.x += unit.dir * RUN_SPEED_PPS * game_framework.frame_time
         if unit.hp < 0:
             game_world.remove_object(unit)
@@ -87,7 +88,7 @@ class Cat:
         self.state_machine.set_transitions(
             {
                 AutoRun : {collision: Attack},
-                Attack: {non_collision: AutoRun, time_out: AutoRun}
+                Attack: {non_collision: AutoRun, time_out: AutoRun},
             }
         )
 
@@ -115,7 +116,7 @@ class Cat:
         return self.x-25, self.y-20, self.x+21, self.y+20
 
     def get_attack_bb(self):
-        return self.x + 21, self.y - 20, self.x + 21 + self.range, self.y + 10
+        return self.x + 22, self.y - 20, self.x + 21 + self.range, self.y + 10
 
     def handle_collision(self, group, other):
         if group == 'BC:Enemy':
