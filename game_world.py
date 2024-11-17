@@ -80,6 +80,5 @@ def handle_collisions():
                     a.handle_collision(group, b)  # 공격 충돌 처리
                     b.handle_collision(group, a)  # 피격 처리
                     collided = True
-
-            if not collided:  # 충돌이 발생하지 않았을 때
-                a.nothing_collide()  # 충돌하지 않은 경우 처리
+                if not collided:  # 충돌이 발생하지 않았을 때
+                    a.nothing_collide()  # 충돌하지 않은 경우 처리

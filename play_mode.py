@@ -27,7 +27,7 @@ def init():
 
     global tower
     tower = Tower()
-    game_world.add_object(tower, 1)
+    game_world.add_object(tower, 0)
     game_world.add_collision_pair('BC:Enemy', tower, None)
 
 
