@@ -6,6 +6,7 @@ import game_framework
 import game_world
 from Backgrounds import Background
 from Hippo import Hippo
+from Macho_Cat import Macho_Cat
 from Tower_objects import Tower
 from Cat import Cat
 from UnitManager import UnitManager
@@ -31,15 +32,15 @@ def init():
 
 
     global BCs
-    BCs = Cat()
-    game_world.add_object(BCs, 1)
+    BCs = Macho_Cat()
+    #game_world.add_object(BCs, 1)
 
     global Enemys
     Enemys = Hippo()
     game_world.add_object(Enemys, 1)
 
 
-    game_world.add_collision_pair('BC:Enemy', BCs, None)
+    #game_world.add_collision_pair('BC:Enemy', BCs, None)
     game_world.add_collision_pair('BC:Enemy', None, Enemys)
 
 

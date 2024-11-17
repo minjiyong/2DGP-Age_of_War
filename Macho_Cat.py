@@ -3,7 +3,6 @@ import game_world
 from state_machine import *
 from pico2d import *
 
-
 # default 아군 Run speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
 RUN_SPEED_KMPH = 6.0  # Km / Hour
@@ -38,7 +37,7 @@ class Attack:
         pass
     @staticmethod
     def draw(unit):
-        unit.image.clip_composite_draw(int(unit.frame) * 112, 52, 112, 102, 0, 'h', unit.x, unit.y, 112, 102)
+        unit.image.clip_composite_draw(int(unit.frame) * 66 + 221, 166, 66, 57, 0, 'h', unit.x, unit.y, 66, 57)
         pass
 
 class AutoRun:
@@ -57,30 +56,35 @@ class AutoRun:
     @staticmethod
     def do(unit):
         unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
+
         unit.x += unit.dir * RUN_SPEED_PPS * game_framework.frame_time
         if unit.hp <= 0:
             game_world.remove_object(unit)
         pass
     @staticmethod
     def draw(unit):
-        unit.image.clip_composite_draw(int(unit.frame) * 112, 154, 112, 102, 0, 'h', unit.x, unit.y, 112, 102)
+        if int(unit.frame) == 0:
+            unit.image.clip_composite_draw(221, 242, 57, 50, 0, 'h', unit.x, unit.y, 57, 50)
+        elif int(unit.frame) == 1:
+            unit.image.clip_composite_draw(57 + 221, 242, 68, 50, 0, 'h', unit.x, unit.y, 68, 50)
+        elif int(unit.frame) == 2:
+            unit.image.clip_composite_draw(68 + 57 + 221, 242, 51, 50, 0, 'h', unit.x, unit.y, 51, 50)
         pass
 
 
-
-# 적군 유닛
-class Hippo:
+# 아군 유닛
+class Macho_Cat:
     image = None
     def __init__(self):
         if self.image == None:
-            self.image = load_image('Resource/Units_Enemy/Mobile - The Battle Cats - Hippoe.png')
+            self.image = load_image('Resource/Units_BC/Mobile - The Battle Cats - Cat.png')
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 12)
-        self.x, self.y = 450, 70
+        self.x, self.y = 80, 45
         self.frame = 0
         self.dir = 1
-        self.enemy = True
-        self.hp = 1000
-        self.attack = 100
+        self.enemy = False
+        self.hp = 160
+        self.attack = 76
         self.range = 20
         self.last_attack_time = 0  # 마지막 공격 시간을 저장
         self.attack_cooldown = 0.5  # 0.5초 간격으로만 공격 가능
@@ -89,7 +93,7 @@ class Hippo:
         self.state_machine.set_transitions(
             {
                 AutoRun : {collision: Attack},
-                Attack: {non_collision: AutoRun, time_out: AutoRun}
+                Attack: {non_collision: AutoRun, time_out: AutoRun},
             }
         )
 
@@ -114,10 +118,10 @@ class Hippo:
         self.font.draw(x, y, text, (255, 112, 0))
 
     def get_bb(self):
-        return self.x-53, self.y-51, self.x+53, self.y+31
+        return self.x-25, self.y-20, self.x+21, self.y+20
 
     def get_attack_bb(self):
-        return self.x - 53 - self.range, self.y - 51, self.x - 53, self.y + 15
+        return self.x + 21, self.y - 20, self.x + 21 + self.range, self.y + 10
 
     def handle_collision(self, group, other):
         if group == 'BC:Enemy':

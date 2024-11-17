@@ -14,7 +14,7 @@ class Tower:
         self.attack = 0
 
     def update(self):
-        if self.hp < 0:
+        if self.hp <= 0:
             game_world.remove_object(self)
 
     def draw(self):
@@ -30,7 +30,7 @@ class Tower:
         self.font.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
         self.font.draw(x, y - 1, text, (0, 0, 0))  # 아래
         self.font.draw(x, y + 1, text, (0, 0, 0))  # 위
-        self.font.draw(x, y, text, (255, 112, 0))
+        self.font.draw(x, y, text, (0, 196, 255))
 
     def get_bb(self):
         return self.x-30, self.y-100, self.x+30, self.y+20
