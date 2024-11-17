@@ -8,6 +8,7 @@ from Cat import Cat
 class UnitManager:
     def __init__(self):
         self.image = load_image('Resource/Units_BC/Mobile - The Battle Cats - Cat Icons.png')
+        self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 20)
         self.gold = 10000
         self.x, self.y = 0, 0
 
@@ -34,6 +35,14 @@ class UnitManager:
         pass
 
     def draw(self):
+        x, y  = 1380, 560
+        text = f'Gold: {self.gold}'
+        self.font.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
+        self.font.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
+        self.font.draw(x, y - 1, text, (0, 0, 0))  # 아래
+        self.font.draw(x, y + 1, text, (0, 0, 0))  # 위
+        self.font.draw(x, y, text, (255, 223, 99))
+
         self.image.clip_composite_draw(5, 1452, 146, 113, 0, '', 70, 540, 73, 56)
         draw_rectangle(33, 512, 106, 568)
 
