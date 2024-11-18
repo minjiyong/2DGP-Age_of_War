@@ -6,6 +6,7 @@ from Axe_Cat import Axe_Cat
 from Cat import Cat
 from Cow_Cat import Cow_Cat
 from Knight_Cat import Knight_Cat
+from Lizard_Cat import Lizard_Cat
 from Macho_Cat import Macho_Cat
 from Tank_Cat import Tank_Cat
 
@@ -126,3 +127,11 @@ class UnitManager:
             game_world.add_collision_pair('BC:Enemy', unit, None)
             self.gold -= 400
             print('madecowcat')
+
+    def make_Lizard_Cat(self):
+        if self.gold >= 1000:
+            unit = Lizard_Cat()
+            game_world.add_object(unit)
+            game_world.add_collision_pair('BC:Enemy', unit, None)
+            self.gold -= 1000
+            print('madelizardcat')

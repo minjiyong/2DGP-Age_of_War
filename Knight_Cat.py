@@ -126,7 +126,7 @@ class Knight_Cat:
         if group == 'BC:Enemy':
             self.state_machine.add_event(('MEET_OTHER_TEAM', 0))
             current_time = get_time()
-            if current_time - self.last_attack_time > self.attack_cooldown:
+            if current_time - self.last_attack_time > self.attack_cooldown and int(self.frame) == 2:
                 other.hitted = True
                 self.last_attack_time = current_time
 

@@ -6,7 +6,7 @@ from pico2d import *
 
 # default 아군 Run speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-RUN_SPEED_KMPH = 6.0  # Km / Hour
+RUN_SPEED_KMPH = 4.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -75,7 +75,7 @@ class Hippo:
         if self.image == None:
             self.image = load_image('Resource/Units_Enemy/Mobile - The Battle Cats - Hippoe.png')
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 12)
-        self.x, self.y = 450, 70
+        self.x, self.y = 1450, 70
         self.frame = 0
         self.dir = 1
         self.enemy = True
@@ -124,7 +124,7 @@ class Hippo:
         if group == 'BC:Enemy':
             self.state_machine.add_event(('MEET_OTHER_TEAM', 0))
             current_time = get_time()
-            if current_time - self.last_attack_time > self.attack_cooldown:
+            if current_time - self.last_attack_time > self.attack_cooldown and int(self.frame) == 2:
                 other.hitted = True
                 self.last_attack_time = current_time
 
