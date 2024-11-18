@@ -12,6 +12,7 @@ class Tower:
         self.x, self.y = 70, 120
         self.hp = 800
         self.attack = 0
+        self.hitted = False
 
     def update(self):
         if self.hp <= 0:
@@ -37,8 +38,14 @@ class Tower:
     def get_attack_bb(self):
         return self.x-30, self.y-100, self.x+30, self.y+20
 
-    def handle_collision(self, group, other):
+    def handle_attack_collision(self, group, other):
         pass
+
+    def handle_hit_collision(self, group, other):
+        if group == 'BC:Enemy':
+            if self.hitted:
+                self.take_damage(other.attack)
+                self.hitted = False
     def nothing_collide(self):
         pass
 

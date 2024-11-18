@@ -74,11 +74,10 @@ def handle_collisions():
     """
     for group, pairs in collision_pairs.items():
         for a in pairs[0]:
-            collided = False
             for b in pairs[1]:
                 if collide(a, b, attack=True):  # 공격 범위 충돌 검사
-                    a.handle_collision(group, b)  # 공격 충돌 처리
-                    b.handle_collision(group, a)  # 피격 처리
-                    collided = True
-                if not collided:  # 충돌이 발생하지 않았을 때
-                    a.nothing_collide()  # 충돌하지 않은 경우 처리
+                    a.handle_attack_collision(group, b)  # 공격 충돌 처리
+                    b.handle_hit_collision(group, a)  # 피격 처리
+                if collide(b, a, attack=True):  # 공격 범위 충돌 검사
+                    a.handle_hit_collision(group, b)  # 공격 충돌 처리
+                    b.handle_attack_collision(group, a)  # 피격 처리

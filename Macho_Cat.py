@@ -88,6 +88,7 @@ class Macho_Cat:
         self.range = 20
         self.last_attack_time = 0  # 마지막 공격 시간을 저장
         self.attack_cooldown = 0.5  # 0.5초 간격으로만 공격 가능
+        self.hitted = False
         self.state_machine = StateMachine(self)      # 소년 객체를 위한 상태 머신임을 알려줌
         self.state_machine.start(AutoRun)
         self.state_machine.set_transitions(
@@ -123,13 +124,19 @@ class Macho_Cat:
     def get_attack_bb(self):
         return self.x + 21, self.y - 20, self.x + 21 + self.range, self.y + 10
 
-    def handle_collision(self, group, other):
+    def handle_attack_collision(self, group, other):
         if group == 'BC:Enemy':
             self.state_machine.add_event(('MEET_OTHER_TEAM', 0))
             current_time = get_time()
             if current_time - self.last_attack_time > self.attack_cooldown:
-                other.take_damage(self.attack)
+                other.hitted = True
                 self.last_attack_time = current_time
+
+    def handle_hit_collision(self, group, other):
+        if group == 'BC:Enemy':
+            if self.hitted:
+                self.take_damage(other.attack)
+                self.hitted = False
 
     def nothing_collide(self):
         self.state_machine.add_event(('NOTHING_COLLIDE', 0))
