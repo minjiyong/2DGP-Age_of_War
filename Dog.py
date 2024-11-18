@@ -3,9 +3,10 @@ import game_world
 from state_machine import *
 from pico2d import *
 
+
 # default 아군 Run speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-RUN_SPEED_KMPH = 5.0  # Km / Hour
+RUN_SPEED_KMPH = 6.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -37,16 +38,7 @@ class Attack:
         pass
     @staticmethod
     def draw(unit):
-        if int(unit.frame) == 0:
-            unit.image.clip_composite_draw(95, 535, 84, 84, 0, 'h', unit.x, unit.y, 56, 56)
-        elif int(unit.frame) == 1:
-            unit.image.clip_composite_draw(181, 535, 80, 84, 0, 'h', unit.x, unit.y, 54, 56)
-        elif int(unit.frame) == 2:
-            unit.image.clip_composite_draw(262, 535, 89, 84, 0, 'h', unit.x, unit.y, 60, 56)
-            unit.image.clip_composite_draw(658, 535, 87, 84, 0, 'h', unit.x + 110, unit.y + 10, 87, 84)
-        elif int(unit.frame) == 3:
-            unit.image.clip_composite_draw(352, 535, 89, 84, 0, 'h', unit.x, unit.y, 60, 56)
-            unit.image.clip_composite_draw(529, 535, 128, 84, 0, 'h', unit.x + 110, unit.y + 10, 128, 84)
+        unit.image.clip_composite_draw(int(unit.frame) * 54, 225, 54, 57, 0, 'h', unit.x, unit.y, 54, 57)
         pass
 
 class AutoRun:
@@ -64,32 +56,32 @@ class AutoRun:
         pass
     @staticmethod
     def do(unit):
-        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 4
-
+        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
         unit.x += unit.dir * RUN_SPEED_PPS * game_framework.frame_time
         if unit.hp <= 0:
             game_world.remove_object(unit)
         pass
     @staticmethod
     def draw(unit):
-        unit.image.clip_composite_draw(int(unit.frame) * 96, 635, 96, 83, 0, 'h', unit.x, unit.y, 64, 52)
+        unit.image.clip_composite_draw(int(unit.frame) * 54, 301, 54, 57, 0, 'h', unit.x, unit.y, 54, 57)
         pass
 
 
-# 아군 유닛
-class Lizard_Cat:
+
+# 적군 유닛
+class Dog:
     image = None
     def __init__(self):
         if self.image == None:
-            self.image = load_image('Resource/Units_BC/Mobile - The Battle Cats - Lizard Cat.png')
+            self.image = load_image('Resource/Units_Enemy/Mobile - The Battle Cats - Doge.png')
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 12)
-        self.x, self.y = 80, 44
+        self.x, self.y = 1450, 45
         self.frame = 0
         self.dir = 1
-        self.enemy = False
-        self.hp = 240
-        self.attack = 106
-        self.range = 140
+        self.enemy = True
+        self.hp = 120
+        self.attack = 60
+        self.range = 20
         self.last_attack_time = 0  # 마지막 공격 시간을 저장
         self.attack_cooldown = 0.5  # 0.5초 간격으로만 공격 가능
         self.hitted = False
@@ -98,7 +90,7 @@ class Lizard_Cat:
         self.state_machine.set_transitions(
             {
                 AutoRun : {collision: Attack},
-                Attack: {non_collision: AutoRun, time_out: AutoRun},
+                Attack: {non_collision: AutoRun, time_out: AutoRun}
             }
         )
 
@@ -114,7 +106,7 @@ class Lizard_Cat:
         draw_rectangle(*self.get_bb())
         draw_rectangle(*self.get_attack_bb())
 
-        x, y = self.x - 22, self.y + 40
+        x, y = self.x - 25, self.y + 40
         text = f'Hp: {self.hp}'
         self.font.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
         self.font.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
@@ -123,16 +115,16 @@ class Lizard_Cat:
         self.font.draw(x, y, text, (255, 112, 0))
 
     def get_bb(self):
-        return self.x-30, self.y-25, self.x+30, self.y+ 20
+        return self.x-21, self.y-20, self.x+25, self.y+20
 
     def get_attack_bb(self):
-        return self.x + 30, self.y - 20, self.x + 30 + self.range, self.y + 10
+        return self.x - 21 - self.range, self.y - 20, self.x - 21, self.y + 10
 
     def handle_attack_collision(self, group, other):
         if group == 'BC:Enemy':
             self.state_machine.add_event(('MEET_OTHER_TEAM', 0))
             current_time = get_time()
-            if current_time - self.last_attack_time > self.attack_cooldown and int(self.frame) == 3:
+            if current_time - self.last_attack_time > self.attack_cooldown and int(self.frame) == 2:
                 other.hitted = True
                 self.last_attack_time = current_time
 

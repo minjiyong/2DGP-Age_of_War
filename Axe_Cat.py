@@ -108,7 +108,7 @@ class Axe_Cat:
         draw_rectangle(*self.get_bb())
         draw_rectangle(*self.get_attack_bb())
 
-        x, y = self.x - 22, self.y + 55
+        x, y = self.x - 30, self.y + 45
         text = f'Hp: {self.hp}'
         self.font.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
         self.font.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
