@@ -5,7 +5,7 @@ from pico2d import *
 
 # default 아군 Run speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-RUN_SPEED_KMPH = 8.0  # Km / Hour
+RUN_SPEED_KMPH = 12.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -37,10 +37,14 @@ class Attack:
         pass
     @staticmethod
     def draw(unit):
-        if int(unit.frame) == 0 or int(unit.frame) == 1:
-            unit.image.clip_composite_draw(409 + int(unit.frame) * 82, 147, 82, 120, 0, 'h', unit.x, unit.y + 18, 54, 90)
-        elif int(unit.frame) == 2 or int(unit.frame) == 3:
-            unit.image.clip_composite_draw(574 + int(unit.frame - 2) * 136, 147, 136, 120, 0, 'h', unit.x, unit.y + 18, 90, 90)
+        if int(unit.frame) == 0:
+            unit.image.clip_composite_draw(0, 326, 105, 110, 0, 'h', unit.x, unit.y + 7, 70, 74)
+        elif int(unit.frame) == 1:
+            unit.image.clip_composite_draw(106, 326, 128, 110, 0, 'h', unit.x, unit.y + 7, 86, 74)
+        elif int(unit.frame) == 2:
+            unit.image.clip_composite_draw(235, 326, 128, 110, 0, 'h', unit.x, unit.y + 7, 86, 74)
+        elif int(unit.frame) == 3:
+            unit.image.clip_composite_draw(363, 326, 151, 120, 0, 'h', unit.x, unit.y + 14, 100, 90)
         pass
 
 class AutoRun:
@@ -58,7 +62,7 @@ class AutoRun:
         pass
     @staticmethod
     def do(unit):
-        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
+        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 4
 
         unit.x += unit.dir * RUN_SPEED_PPS * game_framework.frame_time
         if unit.hp <= 0:
@@ -66,24 +70,24 @@ class AutoRun:
         pass
     @staticmethod
     def draw(unit):
-        unit.image.clip_composite_draw(409 + int(unit.frame) * 95, 285, 95, 96, 0, 'h', unit.x, unit.y + 5, 64, 64)
+        unit.image.clip_composite_draw(int(unit.frame) * 108, 460, 108, 108, 0, 'h', unit.x, unit.y + 7, 72, 72)
         pass
 
 
 # 아군 유닛
-class Knight_Cat:
+class Cow_Cat:
     image = None
     def __init__(self):
         if self.image == None:
-            self.image = load_image('Resource/Units_BC/Mobile - The Battle Cats - Axe Cat.png')
+            self.image = load_image('Resource/Units_BC/Mobile - The Battle Cats - Cow Cat.png')
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 12)
         self.x, self.y = 80, 45
         self.frame = 0
         self.dir = 1
         self.enemy = False
-        self.hp = 230
-        self.attack = 106
-        self.range = 30
+        self.hp = 270
+        self.attack = 76
+        self.range = 20
         self.last_attack_time = 0  # 마지막 공격 시간을 저장
         self.attack_cooldown = 0.5  # 0.5초 간격으로만 공격 가능
         self.hitted = False
@@ -117,10 +121,10 @@ class Knight_Cat:
         self.font.draw(x, y, text, (255, 112, 0))
 
     def get_bb(self):
-        return self.x-30, self.y-25, self.x+10, self.y+ 20
+        return self.x-30, self.y-25, self.x+30, self.y+ 20
 
     def get_attack_bb(self):
-        return self.x + 10, self.y - 25, self.x + 10 + self.range, self.y + 10
+        return self.x + 30, self.y - 25, self.x + 30 + self.range, self.y + 10
 
     def handle_attack_collision(self, group, other):
         if group == 'BC:Enemy':

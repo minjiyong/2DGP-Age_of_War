@@ -4,6 +4,7 @@ from pico2d import *
 
 from Axe_Cat import Axe_Cat
 from Cat import Cat
+from Cow_Cat import Cow_Cat
 from Knight_Cat import Knight_Cat
 from Macho_Cat import Macho_Cat
 from Tank_Cat import Tank_Cat
@@ -117,3 +118,11 @@ class UnitManager:
             game_world.add_collision_pair('BC:Enemy', unit, None)
             self.gold -= 450
             print('madeknightcat')
+
+    def make_Cow_Cat(self):
+        if self.gold >= 400:
+            unit = Cow_Cat()
+            game_world.add_object(unit)
+            game_world.add_collision_pair('BC:Enemy', unit, None)
+            self.gold -= 400
+            print('madecowcat')

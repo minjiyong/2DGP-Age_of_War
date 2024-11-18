@@ -81,7 +81,7 @@ class Knight_Cat:
         self.frame = 0
         self.dir = 1
         self.enemy = False
-        self.hp = 230
+        self.hp = 330
         self.attack = 106
         self.range = 30
         self.last_attack_time = 0  # 마지막 공격 시간을 저장
