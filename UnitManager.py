@@ -2,6 +2,7 @@ import game_framework
 import game_world
 from pico2d import *
 
+from Axe_Cat import Axe_Cat
 from Cat import Cat
 from Macho_Cat import Macho_Cat
 from Tank_Cat import Tank_Cat
@@ -32,6 +33,8 @@ class UnitManager:
                     self.make_Macho_Cat()
                 elif 189 < self.x < 262 and 512 < self.y < 568:
                     self.make_Tank_Cat()
+                elif 267 < self.x < 340 and 512 < self.y < 568:
+                    self.make_Axe_Cat()
 
             elif event.type == SDL_MOUSEMOTION:
                 self.x, self.y = event.x, 600 - 1 - event.y  # y좌표 보정
@@ -52,10 +55,12 @@ class UnitManager:
         self.image.clip_composite_draw(5, 1452, 146, 113, 0, '', 70, 540, 73, 56) # x + 78
         self.image.clip_composite_draw(155, 1452, 146, 113, 0, '', 148, 540, 73, 56)
         self.image.clip_composite_draw(464, 1452, 146, 113, 0, '', 226, 540, 73, 56)
+        self.image.clip_composite_draw(923, 1452, 146, 113, 0, '', 304, 540, 73, 56)
 
         draw_rectangle(33, 512, 106, 568)       # x - 37, x + 36
         draw_rectangle(111, 512, 184, 568)
         draw_rectangle(189, 512, 262, 568)
+        draw_rectangle(267, 512, 340, 568)
 
     def make_Cat(self):
         if self.gold >= 100:
@@ -80,3 +85,11 @@ class UnitManager:
             game_world.add_collision_pair('BC:Enemy', unit, None)
             self.gold -= 200
             print('madetankcat')
+
+    def make_Axe_Cat(self):
+        if self.gold >= 250:
+            unit = Axe_Cat()
+            game_world.add_object(unit)
+            game_world.add_collision_pair('BC:Enemy', unit, None)
+            self.gold -= 250
+            print('madeaxecat')
