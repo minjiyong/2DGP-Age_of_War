@@ -17,6 +17,7 @@ class UnitManager:
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 20)
         self.gold = 10000
         self.x, self.y = 0, 0
+        self.display_bounding_box = False
 
     def handle_event(self):
         events = get_events()

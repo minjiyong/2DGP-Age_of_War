@@ -1,5 +1,6 @@
 import game_framework
 import game_world
+import play_mode
 from state_machine import *
 from pico2d import *
 
@@ -37,7 +38,10 @@ class Attack:
         pass
     @staticmethod
     def draw(unit):
-        unit.image.clip_composite_draw(int(unit.frame) * 66 + 221, 166, 66, 57, 0, 'h', unit.x, unit.y, 66, 57)
+        if int(unit.frame) == 0 or int(unit.frame) == 1:
+            unit.image.clip_composite_draw(int(unit.frame) * 66 + 221, 166, 66, 57, 0, 'h', unit.x, unit.y, 66, 57)
+        elif int(unit.frame) == 2 or int(unit.frame) == 3:
+            unit.image.clip_composite_draw(int(unit.frame - 2) * 69 + 353, 166, 69, 57, 0, 'h', unit.x, unit.y, 69, 57)
         pass
 
 class AutoRun:
@@ -107,8 +111,9 @@ class Macho_Cat:
     def draw(self):
         self.state_machine.draw()
         # 충돌영역 그리기
-        draw_rectangle(*self.get_bb())
-        draw_rectangle(*self.get_attack_bb())
+        if (play_mode.unitmanager.display_bounding_box):
+            draw_rectangle(*self.get_bb())
+            draw_rectangle(*self.get_attack_bb())
 
         x, y = self.x - 25, self.y + 40
         text = f'Hp: {self.hp}'

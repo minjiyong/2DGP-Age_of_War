@@ -1,5 +1,6 @@
 import game_framework
 import game_world
+import play_mode
 from state_machine import *
 from pico2d import *
 
@@ -109,8 +110,9 @@ class Cow_Cat:
     def draw(self):
         self.state_machine.draw()
         # 충돌영역 그리기
-        draw_rectangle(*self.get_bb())
-        draw_rectangle(*self.get_attack_bb())
+        if (play_mode.unitmanager.display_bounding_box):
+            draw_rectangle(*self.get_bb())
+            draw_rectangle(*self.get_attack_bb())
 
         x, y = self.x - 22, self.y + 55
         text = f'Hp: {self.hp}'
