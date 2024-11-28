@@ -1,6 +1,7 @@
 from pico2d import *
 
 import game_world
+import play_mode
 
 
 class Tower:
@@ -23,7 +24,8 @@ class Tower:
         self.image.clip_composite_draw(0, 0, 165, 335, 0, 'h', self.x, self.y, 99, 201)
 
         # 충돌영역 그리기
-        draw_rectangle(*self.get_bb())
+        if (play_mode.unitmanager.display_bounding_box):
+            draw_rectangle(*self.get_bb())
 
         x, y = self.x - 25, self.y + 110
         text = f'Hp: {self.hp}'

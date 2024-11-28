@@ -26,6 +26,11 @@ class UnitManager:
                 game_framework.quit()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
                 game_framework.quit()
+            elif event.type == SDL_KEYDOWN and event.key == SDLK_F12:
+                if self.display_bounding_box:
+                    self.display_bounding_box = False
+                elif not self.display_bounding_box:
+                    self.display_bounding_box = True
             # 왼쪽 마우스 버튼 클릭 시
             elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:
                 print(f"Mouse clicked at ({self.x}, {self.y})")  # 클릭 좌표 출력
