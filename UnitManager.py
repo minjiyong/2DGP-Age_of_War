@@ -9,6 +9,7 @@ from Knight_Cat import Knight_Cat
 from Lizard_Cat import Lizard_Cat
 from Macho_Cat import Macho_Cat
 from Tank_Cat import Tank_Cat
+from Titan_Cat import Titan_Cat
 
 
 class UnitManager:
@@ -17,7 +18,7 @@ class UnitManager:
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 20)
         self.gold = 10000
         self.x, self.y = 0, 0
-        self.display_bounding_box = False
+        self.display_bounding_box = True
 
     def handle_event(self):
         events = get_events()
@@ -141,3 +142,11 @@ class UnitManager:
             game_world.add_collision_pair('BC:Enemy', unit, None)
             self.gold -= 1000
             print('madelizardcat')
+
+    def make_Titan_Cat(self):
+        if self.gold >= 2000:
+            unit = Titan_Cat()
+            game_world.add_object(unit)
+            game_world.add_collision_pair('BC:Enemy', unit, None)
+            self.gold -= 1000
+            print('madetitancat')
