@@ -131,9 +131,12 @@ class Macho_Cat:
 
     def handle_attack_collision(self, group, other):
         if group == 'BC:Enemy':
-            self.state_machine.add_event(('MEET_OTHER_TEAM', 0))
             current_time = get_time()
+
             if current_time - self.last_attack_time > self.attack_cooldown and int(self.frame) == 2:
+                if self.state_machine.cur_state is not Attack:
+                    self.state_machine.add_event(('MEET_OTHER_TEAM', 0))
+
                 other.hitted = True
                 self.last_attack_time = current_time
 
