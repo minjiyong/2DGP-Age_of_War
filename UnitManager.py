@@ -19,6 +19,15 @@ class UnitManager:
         self.gold = 10000
         self.x, self.y = 0, 0
         self.display_bounding_box = True
+        self.unit_cooldown = 0
+        self.cat_cooldown = 0
+        self.machocat_cooldown = 0
+        self.tankcat_cooldown = 0
+        self.axecat_cooldown = 0
+        self.knightcat_cooldown = 0
+        self.cowcat_cooldown = 0
+        self.lizardcat_cooldown = 0
+        self.titancat_cooldown = 0
 
     def handle_event(self):
         events = get_events()
@@ -71,20 +80,44 @@ class UnitManager:
 
         #cat
         self.image.clip_composite_draw(5, 1452, 146, 113, 0, '', 70, 540, 73, 56) # x + 78
+        cat_least_time = 2.0 - (get_time() - self.cat_cooldown)
+        if cat_least_time > 0.0:
+            self.font.draw(70, 540, f'{int(cat_least_time) + 1}', (0, 0, 0))
         #machocat
         self.image.clip_composite_draw(155, 1452, 146, 113, 0, '', 148, 540, 73, 56)
+        machocat_least_time = 2.0 - (get_time() - self.machocat_cooldown)
+        if machocat_least_time > 0.0:
+            self.font.draw(148, 540, f'{int(machocat_least_time) + 1}', (0, 0, 0))
         #tankcat
         self.image.clip_composite_draw(464, 1452, 146, 113, 0, '', 226, 540, 73, 56)
+        tankcat_least_time = 2.5 - (get_time() - self.tankcat_cooldown)
+        if tankcat_least_time > 0.0:
+            self.font.draw(226, 540, f'{int(tankcat_least_time) + 1}', (0, 0, 0))
         #axecat
         self.image.clip_composite_draw(923, 1452, 146, 113, 0, '', 304, 540, 73, 56)
+        axecat_least_time = 3.0 - (get_time() - self.axecat_cooldown)
+        if axecat_least_time > 0.0:
+            self.font.draw(304, 540, f'{int(axecat_least_time) + 1}', (0, 0, 0))
         #knightcat
         self.image.clip_composite_draw(1073, 1452, 146, 113, 0, '', 382, 540, 73, 56)
+        knightcat_least_time = 3.0 - (get_time() - self.knightcat_cooldown)
+        if knightcat_least_time > 0.0:
+            self.font.draw(382, 540, f'{int(knightcat_least_time) + 1}', (0, 0, 0))
         #cowcat
         self.image.clip_composite_draw(1841, 1452, 146, 113, 0, '', 460, 540, 73, 56)
+        cowcat_least_time = 2.5 - (get_time() - self.cowcat_cooldown)
+        if cowcat_least_time > 0.0:
+            self.font.draw(460, 540, f'{int(cowcat_least_time) + 1}', (0, 0, 0))
         #lizardcat
         self.image.clip_composite_draw(3218, 1452, 146, 113, 0, '', 538, 540, 73, 56)
+        lizardcat_least_time = 10.0 - (get_time() - self.lizardcat_cooldown)
+        if lizardcat_least_time > 0.0:
+            self.font.draw(538, 540, f'{int(lizardcat_least_time) + 1}', (0, 0, 0))
         #titancat
         self.image.clip_composite_draw(3677, 1452, 146, 113, 0, '', 616, 540, 73, 56)
+        titancat_least_time = 18.0 - (get_time() - self.titancat_cooldown)
+        if titancat_least_time > 0.0:
+            self.font.draw(616, 540, f'{int(titancat_least_time) + 1}', (0, 0, 0))
 
         if self.display_bounding_box:
             draw_rectangle(33, 512, 106, 568)       # x - 37, x + 36
@@ -97,65 +130,97 @@ class UnitManager:
             draw_rectangle(579, 512, 652, 568)
 
     def make_Cat(self):
-        if self.gold >= 100:
-            unit = Cat()
-            game_world.add_object(unit)
-            game_world.add_collision_pair('BC:Enemy', unit, None)
-            self.gold -= 100
-            print('madecat')
+        if get_time() - self.unit_cooldown> 1.0:
+            if get_time() - self.cat_cooldown > 2.0:
+                if self.gold >= 100:
+                    unit = Cat()
+                    game_world.add_object(unit)
+                    game_world.add_collision_pair('BC:Enemy', unit, None)
+                    self.gold -= 100
+                    self.unit_cooldown = get_time()
+                    self.cat_cooldown = get_time()
+                    print('madecat')
 
     def make_Macho_Cat(self):
-        if self.gold >= 150:
-            unit = Macho_Cat()
-            game_world.add_object(unit)
-            game_world.add_collision_pair('BC:Enemy', unit, None)
-            self.gold -= 150
-            print('mademachocat')
+        if get_time() - self.unit_cooldown> 1.0:
+            if get_time() - self.machocat_cooldown > 2.0:
+                if self.gold >= 150:
+                    unit = Macho_Cat()
+                    game_world.add_object(unit)
+                    game_world.add_collision_pair('BC:Enemy', unit, None)
+                    self.gold -= 150
+                    self.unit_cooldown = get_time()
+                    self.machocat_cooldown = get_time()
+                    print('mademachocat')
 
     def make_Tank_Cat(self):
-        if self.gold >= 200:
-            unit = Tank_Cat()
-            game_world.add_object(unit)
-            game_world.add_collision_pair('BC:Enemy', unit, None)
-            self.gold -= 200
-            print('madetankcat')
+        if get_time() - self.unit_cooldown> 1.0:
+            if get_time() - self.tankcat_cooldown > 2.5:
+                if self.gold >= 200:
+                    unit = Tank_Cat()
+                    game_world.add_object(unit)
+                    game_world.add_collision_pair('BC:Enemy', unit, None)
+                    self.gold -= 200
+                    self.unit_cooldown = get_time()
+                    self.tankcat_cooldown = get_time()
+                    print('madetankcat')
 
     def make_Axe_Cat(self):
-        if self.gold >= 300:
-            unit = Axe_Cat()
-            game_world.add_object(unit)
-            game_world.add_collision_pair('BC:Enemy', unit, None)
-            self.gold -= 300
-            print('madeaxecat')
+        if get_time() - self.unit_cooldown> 1.0:
+            if get_time() - self.axecat_cooldown > 3.0:
+                if self.gold >= 300:
+                    unit = Axe_Cat()
+                    game_world.add_object(unit)
+                    game_world.add_collision_pair('BC:Enemy', unit, None)
+                    self.gold -= 300
+                    self.unit_cooldown = get_time()
+                    self.axecat_cooldown = get_time()
+                    print('madeaxecat')
 
     def make_Knight_Cat(self):
-        if self.gold >= 450:
-            unit = Knight_Cat()
-            game_world.add_object(unit)
-            game_world.add_collision_pair('BC:Enemy', unit, None)
-            self.gold -= 450
-            print('madeknightcat')
+        if get_time() - self.unit_cooldown> 1.0:
+            if get_time() - self.knightcat_cooldown > 3.0:
+                if self.gold >= 450:
+                    unit = Knight_Cat()
+                    game_world.add_object(unit)
+                    game_world.add_collision_pair('BC:Enemy', unit, None)
+                    self.gold -= 450
+                    self.unit_cooldown = get_time()
+                    self.knightcat_cooldown = get_time()
+                    print('madeknightcat')
 
     def make_Cow_Cat(self):
-        if self.gold >= 400:
-            unit = Cow_Cat()
-            game_world.add_object(unit)
-            game_world.add_collision_pair('BC:Enemy', unit, None)
-            self.gold -= 400
-            print('madecowcat')
+        if get_time() - self.unit_cooldown> 1.0:
+            if get_time() - self.cowcat_cooldown > 2.5:
+                if self.gold >= 400:
+                    unit = Cow_Cat()
+                    game_world.add_object(unit)
+                    game_world.add_collision_pair('BC:Enemy', unit, None)
+                    self.gold -= 400
+                    self.unit_cooldown = get_time()
+                    self.cowcat_cooldown = get_time()
+                    print('madecowcat')
 
     def make_Lizard_Cat(self):
-        if self.gold >= 1000:
-            unit = Lizard_Cat()
-            game_world.add_object(unit)
-            game_world.add_collision_pair('BC:Enemy', unit, None)
-            self.gold -= 1000
-            print('madelizardcat')
+        if get_time() - self.unit_cooldown> 1.0:
+            if get_time() - self.lizardcat_cooldown > 10.0:
+                if self.gold >= 1000:
+                    unit = Lizard_Cat()
+                    game_world.add_object(unit)
+                    game_world.add_collision_pair('BC:Enemy', unit, None)
+                    self.gold -= 1000
+                    self.unit_cooldown = get_time()
+                    self.lizardcat_cooldown = get_time()
+                    print('madelizardcat')
 
     def make_Titan_Cat(self):
-        if self.gold >= 2000:
-            unit = Titan_Cat()
-            game_world.add_object(unit)
-            game_world.add_collision_pair('BC:Enemy', unit, None)
-            self.gold -= 2000
-            print('madetitancat')
+        if get_time() - self.unit_cooldown> 1.0:
+            if get_time() - self.titancat_cooldown > 18.0:
+                if self.gold >= 2000:
+                    unit = Titan_Cat()
+                    game_world.add_object(unit)
+                    game_world.add_collision_pair('BC:Enemy', unit, None)
+                    self.gold -= 2000
+                    self.unit_cooldown = get_time()
+                    self.titancat_cooldown = get_time()
+                    print('madetitancat')
