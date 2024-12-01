@@ -69,23 +69,32 @@ class UnitManager:
         self.font.draw(x, y + 1, text, (0, 0, 0))  # 위
         self.font.draw(x, y, text, (255, 223, 99))
 
+        #cat
         self.image.clip_composite_draw(5, 1452, 146, 113, 0, '', 70, 540, 73, 56) # x + 78
+        #machocat
         self.image.clip_composite_draw(155, 1452, 146, 113, 0, '', 148, 540, 73, 56)
+        #tankcat
         self.image.clip_composite_draw(464, 1452, 146, 113, 0, '', 226, 540, 73, 56)
+        #axecat
         self.image.clip_composite_draw(923, 1452, 146, 113, 0, '', 304, 540, 73, 56)
+        #knightcat
         self.image.clip_composite_draw(1073, 1452, 146, 113, 0, '', 382, 540, 73, 56)
+        #cowcat
         self.image.clip_composite_draw(1841, 1452, 146, 113, 0, '', 460, 540, 73, 56)
+        #lizardcat
         self.image.clip_composite_draw(3218, 1452, 146, 113, 0, '', 538, 540, 73, 56)
+        #titancat
         self.image.clip_composite_draw(3677, 1452, 146, 113, 0, '', 616, 540, 73, 56)
 
-        draw_rectangle(33, 512, 106, 568)       # x - 37, x + 36
-        draw_rectangle(111, 512, 184, 568)
-        draw_rectangle(189, 512, 262, 568)
-        draw_rectangle(267, 512, 340, 568)
-        draw_rectangle(345, 512, 418, 568)
-        draw_rectangle(423, 512, 496, 568)
-        draw_rectangle(501, 512, 574, 568)
-        draw_rectangle(579, 512, 652, 568)
+        if self.display_bounding_box:
+            draw_rectangle(33, 512, 106, 568)       # x - 37, x + 36
+            draw_rectangle(111, 512, 184, 568)
+            draw_rectangle(189, 512, 262, 568)
+            draw_rectangle(267, 512, 340, 568)
+            draw_rectangle(345, 512, 418, 568)
+            draw_rectangle(423, 512, 496, 568)
+            draw_rectangle(501, 512, 574, 568)
+            draw_rectangle(579, 512, 652, 568)
 
     def make_Cat(self):
         if self.gold >= 100:
@@ -148,5 +157,5 @@ class UnitManager:
             unit = Titan_Cat()
             game_world.add_object(unit)
             game_world.add_collision_pair('BC:Enemy', unit, None)
-            self.gold -= 1000
+            self.gold -= 2000
             print('madetitancat')
