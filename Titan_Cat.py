@@ -117,7 +117,7 @@ class Titan_Cat:
             draw_rectangle(*self.get_bb())
             draw_rectangle(*self.get_attack_bb())
 
-        x, y = self.x - 22, self.y + 40
+        x, y = self.x - 22, self.y + 100
         text = f'Hp: {self.hp}'
         self.font.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
         self.font.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽

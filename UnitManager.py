@@ -16,18 +16,19 @@ class UnitManager:
     def __init__(self):
         self.image = load_image('Resource/Units_BC/Mobile - The Battle Cats - Cat Icons.png')
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 20)
+        self.moneyfont = load_font('Resource/Font/NanumSquareRoundR.ttf', 15)
         self.gold = 10000
         self.x, self.y = 0, 0
         self.display_bounding_box = True
         self.unit_cooldown = 0
-        self.cat_cooldown = 0
-        self.machocat_cooldown = 0
-        self.tankcat_cooldown = 0
-        self.axecat_cooldown = 0
-        self.knightcat_cooldown = 0
-        self.cowcat_cooldown = 0
-        self.lizardcat_cooldown = 0
-        self.titancat_cooldown = 0
+        self.cat_cooldown = -2.0
+        self.machocat_cooldown = -2.0
+        self.tankcat_cooldown = -2.5
+        self.axecat_cooldown = -3.0
+        self.knightcat_cooldown = -3.0
+        self.cowcat_cooldown = -2.5
+        self.lizardcat_cooldown = -10.0
+        self.titancat_cooldown = -18.0
 
     def handle_event(self):
         events = get_events()
@@ -80,44 +81,156 @@ class UnitManager:
 
         #cat
         self.image.clip_composite_draw(5, 1452, 146, 113, 0, '', 70, 540, 73, 56) # x + 78
+        x, y = 62, 523
+        text = f'100원'
+        self.moneyfont.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
+        self.moneyfont.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
+        self.moneyfont.draw(x, y - 1, text, (0, 0, 0))  # 아래
+        self.moneyfont.draw(x, y + 1, text, (0, 0, 0))  # 위
+        self.moneyfont.draw(x, y, text, (255, 223, 99))
         cat_least_time = 2.0 - (get_time() - self.cat_cooldown)
         if cat_least_time > 0.0:
-            self.font.draw(70, 540, f'{int(cat_least_time) + 1}', (0, 0, 0))
+            x, y = 70, 540
+            text = f'{int(cat_least_time) + 1}'
+            self.font.draw(x - 2, y, text, (255, 255, 255))  # 왼쪽
+            self.font.draw(x + 2, y, text, (255, 255, 255))  # 오른쪽
+            self.font.draw(x, y - 2, text, (255, 255, 255))  # 아래
+            self.font.draw(x, y + 2, text, (255, 255, 255))  # 위
+            self.font.draw(x, y, text, (50, 50, 50))
+
         #machocat
         self.image.clip_composite_draw(155, 1452, 146, 113, 0, '', 148, 540, 73, 56)
+        x, y = 140, 523
+        text = f'150원'
+        self.moneyfont.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
+        self.moneyfont.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
+        self.moneyfont.draw(x, y - 1, text, (0, 0, 0))  # 아래
+        self.moneyfont.draw(x, y + 1, text, (0, 0, 0))  # 위
+        self.moneyfont.draw(x, y, text, (255, 223, 99))
         machocat_least_time = 2.0 - (get_time() - self.machocat_cooldown)
         if machocat_least_time > 0.0:
-            self.font.draw(148, 540, f'{int(machocat_least_time) + 1}', (0, 0, 0))
+            x, y = 148, 540
+            text = f'{int(machocat_least_time) + 1}'
+            self.font.draw(x - 2, y, text, (255, 255, 255))  # 왼쪽
+            self.font.draw(x + 2, y, text, (255, 255, 255))  # 오른쪽
+            self.font.draw(x, y - 2, text, (255, 255, 255))  # 아래
+            self.font.draw(x, y + 2, text, (255, 255, 255))  # 위
+            self.font.draw(x, y, text, (50, 50, 50))
+
         #tankcat
         self.image.clip_composite_draw(464, 1452, 146, 113, 0, '', 226, 540, 73, 56)
+        x, y = 218, 523
+        text = f'200원'
+        self.moneyfont.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
+        self.moneyfont.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
+        self.moneyfont.draw(x, y - 1, text, (0, 0, 0))  # 아래
+        self.moneyfont.draw(x, y + 1, text, (0, 0, 0))  # 위
+        self.moneyfont.draw(x, y, text, (255, 223, 99))
         tankcat_least_time = 2.5 - (get_time() - self.tankcat_cooldown)
         if tankcat_least_time > 0.0:
-            self.font.draw(226, 540, f'{int(tankcat_least_time) + 1}', (0, 0, 0))
+            x, y = 226, 540
+            text = f'{int(tankcat_least_time) + 1}'
+            self.font.draw(x - 2, y, text, (255, 255, 255))  # 왼쪽
+            self.font.draw(x + 2, y, text, (255, 255, 255))  # 오른쪽
+            self.font.draw(x, y - 2, text, (255, 255, 255))  # 아래
+            self.font.draw(x, y + 2, text, (255, 255, 255))  # 위
+            self.font.draw(x, y, text, (50, 50, 50))
+
         #axecat
         self.image.clip_composite_draw(923, 1452, 146, 113, 0, '', 304, 540, 73, 56)
+        x, y = 296, 523
+        text = f'300원'
+        self.moneyfont.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
+        self.moneyfont.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
+        self.moneyfont.draw(x, y - 1, text, (0, 0, 0))  # 아래
+        self.moneyfont.draw(x, y + 1, text, (0, 0, 0))  # 위
+        self.moneyfont.draw(x, y, text, (255, 223, 99))
         axecat_least_time = 3.0 - (get_time() - self.axecat_cooldown)
         if axecat_least_time > 0.0:
-            self.font.draw(304, 540, f'{int(axecat_least_time) + 1}', (0, 0, 0))
+            x, y = 304, 540
+            text = f'{int(axecat_least_time) + 1}'
+            self.font.draw(x - 2, y, text, (255, 255, 255))  # 왼쪽
+            self.font.draw(x + 2, y, text, (255, 255, 255))  # 오른쪽
+            self.font.draw(x, y - 2, text, (255, 255, 255))  # 아래
+            self.font.draw(x, y + 2, text, (255, 255, 255))  # 위
+            self.font.draw(x, y, text, (50, 50, 50))
+
         #knightcat
         self.image.clip_composite_draw(1073, 1452, 146, 113, 0, '', 382, 540, 73, 56)
+        x, y = 374, 523
+        text = f'450원'
+        self.moneyfont.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
+        self.moneyfont.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
+        self.moneyfont.draw(x, y - 1, text, (0, 0, 0))  # 아래
+        self.moneyfont.draw(x, y + 1, text, (0, 0, 0))  # 위
+        self.moneyfont.draw(x, y, text, (255, 223, 99))
         knightcat_least_time = 3.0 - (get_time() - self.knightcat_cooldown)
         if knightcat_least_time > 0.0:
-            self.font.draw(382, 540, f'{int(knightcat_least_time) + 1}', (0, 0, 0))
+            x, y = 382, 540
+            text = f'{int(knightcat_least_time) + 1}'
+            self.font.draw(x - 2, y, text, (255, 255, 255))  # 왼쪽
+            self.font.draw(x + 2, y, text, (255, 255, 255))  # 오른쪽
+            self.font.draw(x, y - 2, text, (255, 255, 255))  # 아래
+            self.font.draw(x, y + 2, text, (255, 255, 255))  # 위
+            self.font.draw(x, y, text, (50, 50, 50))
+
         #cowcat
         self.image.clip_composite_draw(1841, 1452, 146, 113, 0, '', 460, 540, 73, 56)
+        x, y = 452, 523
+        text = f'400원'
+        self.moneyfont.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
+        self.moneyfont.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
+        self.moneyfont.draw(x, y - 1, text, (0, 0, 0))  # 아래
+        self.moneyfont.draw(x, y + 1, text, (0, 0, 0))  # 위
+        self.moneyfont.draw(x, y, text, (255, 223, 99))
         cowcat_least_time = 2.5 - (get_time() - self.cowcat_cooldown)
         if cowcat_least_time > 0.0:
-            self.font.draw(460, 540, f'{int(cowcat_least_time) + 1}', (0, 0, 0))
+            x, y = 460, 540
+            text = f'{int(cowcat_least_time) + 1}'
+            self.font.draw(x - 2, y, text, (255, 255, 255))  # 왼쪽
+            self.font.draw(x + 2, y, text, (255, 255, 255))  # 오른쪽
+            self.font.draw(x, y - 2, text, (255, 255, 255))  # 아래
+            self.font.draw(x, y + 2, text, (255, 255, 255))  # 위
+            self.font.draw(x, y, text, (50, 50, 50))
+
         #lizardcat
         self.image.clip_composite_draw(3218, 1452, 146, 113, 0, '', 538, 540, 73, 56)
+        x, y = 521, 523
+        text = f'1000원'
+        self.moneyfont.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
+        self.moneyfont.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
+        self.moneyfont.draw(x, y - 1, text, (0, 0, 0))  # 아래
+        self.moneyfont.draw(x, y + 1, text, (0, 0, 0))  # 위
+        self.moneyfont.draw(x, y, text, (255, 223, 99))
         lizardcat_least_time = 10.0 - (get_time() - self.lizardcat_cooldown)
         if lizardcat_least_time > 0.0:
-            self.font.draw(538, 540, f'{int(lizardcat_least_time) + 1}', (0, 0, 0))
+            x, y = 538, 540
+            text = f'{int(lizardcat_least_time) + 1}'
+            self.font.draw(x - 2, y, text, (255, 255, 255))  # 왼쪽
+            self.font.draw(x + 2, y, text, (255, 255, 255))  # 오른쪽
+            self.font.draw(x, y - 2, text, (255, 255, 255))  # 아래
+            self.font.draw(x, y + 2, text, (255, 255, 255))  # 위
+            self.font.draw(x, y, text, (50, 50, 50))
+
         #titancat
         self.image.clip_composite_draw(3677, 1452, 146, 113, 0, '', 616, 540, 73, 56)
+        x, y = 599, 523
+        text = f'2000원'
+        self.moneyfont.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
+        self.moneyfont.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
+        self.moneyfont.draw(x, y - 1, text, (0, 0, 0))  # 아래
+        self.moneyfont.draw(x, y + 1, text, (0, 0, 0))  # 위
+        self.moneyfont.draw(x, y, text, (255, 223, 99))
         titancat_least_time = 18.0 - (get_time() - self.titancat_cooldown)
         if titancat_least_time > 0.0:
-            self.font.draw(616, 540, f'{int(titancat_least_time) + 1}', (0, 0, 0))
+            x, y = 616, 540
+            text = f'{int(titancat_least_time) + 1}'
+            self.font.draw(x - 2, y, text, (255, 255, 255))  # 왼쪽
+            self.font.draw(x + 2, y, text, (255, 255, 255))  # 오른쪽
+            self.font.draw(x, y - 2, text, (255, 255, 255))  # 아래
+            self.font.draw(x, y + 2, text, (255, 255, 255))  # 위
+            self.font.draw(x, y, text, (50, 50, 50))
+
 
         if self.display_bounding_box:
             draw_rectangle(33, 512, 106, 568)       # x - 37, x + 36
