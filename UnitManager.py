@@ -93,7 +93,7 @@ class UnitManager:
             game_world.add_object(unit)
             game_world.add_collision_pair('BC:Enemy', unit, None)
             self.gold -= 100
-            print('mademachocat')
+            print('madecat')
 
     def make_Macho_Cat(self):
         if self.gold >= 150:
@@ -101,7 +101,7 @@ class UnitManager:
             game_world.add_object(unit)
             game_world.add_collision_pair('BC:Enemy', unit, None)
             self.gold -= 150
-            print('madecat')
+            print('mademachocat')
 
     def make_Tank_Cat(self):
         if self.gold >= 200:
