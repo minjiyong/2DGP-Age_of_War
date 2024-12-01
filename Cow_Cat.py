@@ -74,6 +74,33 @@ class AutoRun:
         unit.image.clip_composite_draw(int(unit.frame) * 108, 460, 108, 108, 0, 'h', unit.x, unit.y + 7, 72, 72)
         pass
 
+class Idle:
+    @staticmethod
+    def enter(unit, e):
+        if start_event(e):
+            if not unit.enemy:
+                unit.dir = 1
+            elif unit.enemy:
+                unit.dir = -1
+        unit.frame = 0
+        unit.wait_time = get_time()
+        pass
+    @staticmethod
+    def exit(unit, e):
+        pass
+    @staticmethod
+    def do(unit):
+        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 4
+        if unit.hp <= 0:
+            game_world.remove_object(unit)
+        if get_time() - unit.wait_time > 0.5:
+            unit.state_machine.add_event(('TIME_OUT', 0))
+        pass
+    @staticmethod
+    def draw(unit):
+        unit.image.clip_composite_draw(int(unit.frame) * 108, 460, 108, 108, 0, 'h', unit.x, unit.y + 7, 72, 72)
+        pass
+
 
 # 아군 유닛
 class Cow_Cat:
@@ -96,8 +123,9 @@ class Cow_Cat:
         self.state_machine.start(AutoRun)
         self.state_machine.set_transitions(
             {
-                AutoRun : {collision: Attack},
-                Attack: {non_collision: AutoRun, time_out: AutoRun},
+                AutoRun: {collision: Attack},
+                Attack: {collision: Attack, time_out: Idle},
+                Idle: {collision: Attack, time_out: AutoRun}
             }
         )
 
