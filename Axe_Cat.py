@@ -144,7 +144,7 @@ class Axe_Cat:
         self.font.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
         self.font.draw(x, y - 1, text, (0, 0, 0))  # 아래
         self.font.draw(x, y + 1, text, (0, 0, 0))  # 위
-        self.font.draw(x, y, text, (255, 112, 0))
+        self.font.draw(x, y, text, (0, 196, 255))
 
     def get_bb(self):
         return self.x-37, self.y-20, self.x+10, self.y+ 20

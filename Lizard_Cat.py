@@ -116,7 +116,7 @@ class Lizard_Cat:
         self.dir = 1
         self.enemy = False
         self.hp = 240
-        self.attack = 106
+        self.attack = 36
         self.range = 140
         self.last_attack_time = 0  # 마지막 공격 시간을 저장
         self.attack_cooldown = 0.5  # 0.5초 간격으로만 공격 가능
@@ -150,7 +150,7 @@ class Lizard_Cat:
         self.font.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
         self.font.draw(x, y - 1, text, (0, 0, 0))  # 아래
         self.font.draw(x, y + 1, text, (0, 0, 0))  # 위
-        self.font.draw(x, y, text, (255, 112, 0))
+        self.font.draw(x, y, text, (0, 196, 255))
 
     def get_bb(self):
         return self.x-30, self.y-25, self.x+30, self.y+ 20

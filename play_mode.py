@@ -6,6 +6,7 @@ import game_framework
 import game_world
 from Backgrounds import Background
 from Dog import Dog
+from EnemyManager import EnemyManager
 from Hippo import Hippo
 from Macho_Cat import Macho_Cat
 from Tower_objects import Tower
@@ -26,21 +27,15 @@ def init():
     unitmanager = UnitManager()
     game_world.add_object(unitmanager, 0)
 
+    global enemymanager
+    enemymanager = EnemyManager()
+    game_world.add_object(enemymanager, 0)
+
     global tower
     tower = Tower()
     game_world.add_object(tower, 0)
     game_world.add_collision_pair('BC:Enemy', tower, None)
 
-    global Enemys
-    Enemys = Hippo()
-    game_world.add_object(Enemys, 1)
-
-    global dog
-    dog = Dog()
-    game_world.add_object(dog, 1)
-
-    game_world.add_collision_pair('BC:Enemy', None, dog)
-    game_world.add_collision_pair('BC:Enemy', None, Enemys)
 
 
 def finish():

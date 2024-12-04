@@ -21,6 +21,9 @@ class UnitManager:
         self.x, self.y = 0, 0
         self.display_bounding_box = True
 
+        self.play_time = get_time()
+        self.game_time = 0
+
         self.cat_unlock = False
         self.machocat_unlock = False
         self.tankcat_unlock = False
@@ -100,13 +103,23 @@ class UnitManager:
 
     def draw(self):
         #gold
-        x, y  = 1380, 560
+        x, y  = 1380, 530
         text = f'Gold: {self.gold}'
         self.font.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
         self.font.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
         self.font.draw(x, y - 1, text, (0, 0, 0))  # 아래
         self.font.draw(x, y + 1, text, (0, 0, 0))  # 위
         self.font.draw(x, y, text, (255, 223, 99))
+
+        #play time
+        x, y = 1380, 560
+        self.game_time = int(get_time() - self.play_time)
+        text = f'Time: {self.game_time}'
+        self.font.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
+        self.font.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
+        self.font.draw(x, y - 1, text, (0, 0, 0))  # 아래
+        self.font.draw(x, y + 1, text, (0, 0, 0))  # 위
+        self.font.draw(x, y, text, (99, 99, 223))
 
         #cat
         if self.cat_unlock:
