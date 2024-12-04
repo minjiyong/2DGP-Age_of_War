@@ -162,7 +162,7 @@ class Lizard_Cat:
         if group == 'BC:Enemy':
             current_time = get_time()
 
-            if current_time - self.last_attack_time > self.attack_cooldown and int(self.frame) == 2:
+            if current_time - self.last_attack_time > self.attack_cooldown and int(self.frame) == 3:
                 if self.state_machine.cur_state is not Attack:
                     self.state_machine.add_event(('MEET_OTHER_TEAM', 0))
 

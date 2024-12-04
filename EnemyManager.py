@@ -3,6 +3,7 @@ import game_world
 import play_mode
 from pico2d import *
 
+from Croco import Croco
 from Dog import Dog
 from Hippo import Hippo
 
@@ -13,6 +14,9 @@ class EnemyManager:
 
         self.Dog_spawn_cooldown = get_time()
         self.Dog_max_cooldown = 10.0
+
+        self.Croco_spawn_cooldown = get_time()
+        self.Croco_max_cooldown = 13.0
 
         self.Hippo_spawn_cooldown = get_time()
         self.Hippo_max_cooldown = 120.0
@@ -31,6 +35,8 @@ class EnemyManager:
             return Dog()
         elif enemy_type == "Hippo":
             return Hippo()
+        elif enemy_type == "Croco":
+            return Croco()
         else:
             raise ValueError(f"Unknown enemy type: {enemy_type}")
 
@@ -54,6 +60,10 @@ class EnemyManager:
             self.add_to_queue("Dog")
             self.Dog_spawn_cooldown = get_time()
 
+        if get_time() - self.Croco_spawn_cooldown > self.Croco_max_cooldown:
+            self.add_to_queue("Croco")
+            self.Croco_spawn_cooldown = get_time()
+
         if play_mode.unitmanager.game_time == 30:
             self.Dog_max_cooldown = 8.0
 
@@ -72,6 +82,10 @@ class EnemyManager:
         if play_mode.unitmanager.machocat_unlock and not self.machocat_unlock:
             self.add_to_queue("Dog")
             self.machocat_unlock = True
+
+        if play_mode.unitmanager.tankcat_unlock and not self.tankcat_unlock:
+            self.add_to_queue("Croco")
+            self.tankcat_unlock = True
 
         self.process_queue()
         pass

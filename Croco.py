@@ -7,7 +7,7 @@ from pico2d import *
 
 # default 아군 Run speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-RUN_SPEED_KMPH = 6.0  # Km / Hour
+RUN_SPEED_KMPH = 5.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -15,7 +15,7 @@ RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 # default 아군 Action Speed
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-FRAMES_PER_ACTION = 4
+FRAMES_PER_ACTION = 5
 
 
 class Attack:
@@ -31,7 +31,7 @@ class Attack:
         pass
     @staticmethod
     def do(unit):
-        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 4
+        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 5
         if unit.hp <= 0:
             game_world.remove_object(unit)
         if get_time() - unit.wait_time > 1.5:
@@ -39,7 +39,7 @@ class Attack:
         pass
     @staticmethod
     def draw(unit):
-        unit.image.clip_composite_draw(int(unit.frame) * 54, 225, 54, 57, 0, 'h', unit.x, unit.y, 54, 57)
+        unit.image.clip_composite_draw(int(unit.frame) * 88, 119, 88, 66, 0, 'h', unit.x, unit.y + 10, 88, 66)
         pass
 
 class AutoRun:
@@ -57,14 +57,14 @@ class AutoRun:
         pass
     @staticmethod
     def do(unit):
-        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
+        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 5
         unit.x += unit.dir * RUN_SPEED_PPS * game_framework.frame_time
         if unit.hp <= 0:
             game_world.remove_object(unit)
         pass
     @staticmethod
     def draw(unit):
-        unit.image.clip_composite_draw(int(unit.frame) * 54, 301, 54, 57, 0, 'h', unit.x, unit.y, 54, 57)
+        unit.image.clip_composite_draw(3 + int(unit.frame) * 87, 188, 87, 46, 0, 'h', unit.x, unit.y, 87, 46)
         pass
 
 class Idle:
@@ -83,7 +83,7 @@ class Idle:
         pass
     @staticmethod
     def do(unit):
-        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
+        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 5
         if unit.hp <= 0:
             game_world.remove_object(unit)
         if get_time() - unit.wait_time > 0.5:
@@ -91,24 +91,24 @@ class Idle:
         pass
     @staticmethod
     def draw(unit):
-        unit.image.clip_composite_draw(int(unit.frame) * 54, 301, 54, 57, 0, 'h', unit.x, unit.y, 54, 57)
+        unit.image.clip_composite_draw(3 + int(unit.frame) * 87, 188, 87, 46, 0, 'h', unit.x, unit.y, 87, 46)
         pass
 
 
 
 # 적군 유닛
-class Dog:
+class Croco:
     image = None
     def __init__(self):
         if self.image == None:
-            self.image = load_image('Resource/Units_Enemy/Mobile - The Battle Cats - Doge.png')
+            self.image = load_image('Resource/Units_Enemy/Mobile - The Battle Cats - Croco.png')
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 12)
         self.x, self.y = 1450, 45
         self.frame = 0
         self.dir = 1
         self.enemy = True
-        self.hp = 110
-        self.attack = 56
+        self.hp = 230
+        self.attack = 40
         self.range = 20
         self.last_attack_time = 0  # 마지막 공격 시간을 저장
         self.attack_cooldown = 0.5  # 0.5초 간격으로만 공격 가능
@@ -145,16 +145,16 @@ class Dog:
         self.font.draw(x, y, text, (255, 112, 0))
 
     def get_bb(self):
-        return self.x-21, self.y-20, self.x+25, self.y+20
+        return self.x-40, self.y-20, self.x+30, self.y+20
 
     def get_attack_bb(self):
-        return self.x - 21 - self.range, self.y - 20, self.x - 21, self.y + 10
+        return self.x - 40 - self.range, self.y - 20, self.x - 40, self.y + 10
 
     def handle_attack_collision(self, group, other):
         if group == 'BC:Enemy':
             current_time = get_time()
 
-            if current_time - self.last_attack_time > self.attack_cooldown and int(self.frame) == 2:
+            if current_time - self.last_attack_time > self.attack_cooldown and int(self.frame) == 4:
                 if self.state_machine.cur_state is not Attack:
                     self.state_machine.add_event(('MEET_OTHER_TEAM', 0))
 

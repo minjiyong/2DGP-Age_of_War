@@ -5,6 +5,7 @@ import game_framework
 
 import game_world
 from Backgrounds import Background
+from Croco import Croco
 from Dog import Dog
 from EnemyManager import EnemyManager
 from Hippo import Hippo
@@ -36,7 +37,10 @@ def init():
     game_world.add_object(tower, 0)
     game_world.add_collision_pair('BC:Enemy', tower, None)
 
-
+    global enemy
+    enemy = Croco()
+    game_world.add_object(enemy, 1)
+    game_world.add_collision_pair('BC:Enemy', None, enemy)
 
 def finish():
     game_world.clear()
