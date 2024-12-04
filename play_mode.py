@@ -10,6 +10,7 @@ from Dog import Dog
 from EnemyManager import EnemyManager
 from Hippo import Hippo
 from Macho_Cat import Macho_Cat
+from Snake import Snake
 from Tower_objects import Tower
 from Cat import Cat
 from UnitManager import UnitManager
@@ -38,7 +39,7 @@ def init():
     game_world.add_collision_pair('BC:Enemy', tower, None)
 
     global enemy
-    enemy = Croco()
+    enemy = Snake()
     game_world.add_object(enemy, 1)
     game_world.add_collision_pair('BC:Enemy', None, enemy)
 
