@@ -2,6 +2,7 @@ import game_framework
 import game_world
 from pico2d import *
 
+import play_mode
 from Axe_Cat import Axe_Cat
 from Cat import Cat
 from Cow_Cat import Cow_Cat
@@ -15,6 +16,7 @@ from Titan_Cat import Titan_Cat
 class UnitManager:
     def __init__(self):
         self.image = load_image('Resource/Units_BC/Mobile - The Battle Cats - Cat Icons.png')
+        self.skillimage = load_image('Resource/Units_BC/3DS - Puzzle & Dragons Super Mario Bros Edition - Skill Icons.png')
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 20)
         self.moneyfont = load_font('Resource/Font/NanumSquareRoundR.ttf', 15)
         self.gold = 10000
@@ -93,6 +95,13 @@ class UnitManager:
                 elif 579 < self.x < 652 and 512 < self.y < 568:
                     if self.titancat_unlock:
                         self.make_Titan_Cat()
+
+                elif 33 < self.x < 106 and 452 < self.y < 508:
+                    pass
+                elif 111 < self.x < 184 and 452 < self.y < 508:
+                    if self.gold > 500:
+                        self.gold -= 500
+                        play_mode.tower.recover_tower()
 
             elif event.type == SDL_MOUSEMOTION:
                 self.x, self.y = event.x, 600 - 1 - event.y  # y좌표 보정
@@ -281,6 +290,25 @@ class UnitManager:
                 self.font.draw(x, y + 2, text, (255, 255, 255))  # 위
                 self.font.draw(x, y, text, (50, 50, 50))
 
+        #skill - gold
+        self.skillimage.clip_composite_draw(0, 56, 73, 56, 0, '', 70, 480, 73, 56)
+        x, y = 62, 463
+        text = f'500원'
+        self.moneyfont.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
+        self.moneyfont.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
+        self.moneyfont.draw(x, y - 1, text, (0, 0, 0))  # 아래
+        self.moneyfont.draw(x, y + 1, text, (0, 0, 0))  # 위
+        self.moneyfont.draw(x, y, text, (255, 223, 99))
+
+        # skill - recover
+        self.skillimage.clip_composite_draw(0, 0, 73, 56, 0, '', 148, 480, 73, 56)
+        x, y = 140, 463
+        text = f'500원'
+        self.moneyfont.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
+        self.moneyfont.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
+        self.moneyfont.draw(x, y - 1, text, (0, 0, 0))  # 아래
+        self.moneyfont.draw(x, y + 1, text, (0, 0, 0))  # 위
+        self.moneyfont.draw(x, y, text, (255, 223, 99))
 
         if self.display_bounding_box:
             draw_rectangle(33, 512, 106, 568)       # x - 37, x + 36
@@ -291,6 +319,9 @@ class UnitManager:
             draw_rectangle(423, 512, 496, 568)
             draw_rectangle(501, 512, 574, 568)
             draw_rectangle(579, 512, 652, 568)
+
+            draw_rectangle(33, 452, 106, 508)
+            draw_rectangle(111, 452, 184, 508)
 
     def make_Cat(self):
         if get_time() - self.unit_cooldown> 1.0:

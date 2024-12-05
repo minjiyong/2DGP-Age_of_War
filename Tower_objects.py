@@ -53,3 +53,6 @@ class Tower:
 
     def take_damage(self, attack):
         self.hp -= attack
+
+    def recover_tower(self):
+        self.hp += 200
