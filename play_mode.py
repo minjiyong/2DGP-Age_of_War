@@ -28,6 +28,7 @@ def init():
     global unitmanager
     unitmanager = UnitManager()
     game_world.add_object(unitmanager, 0)
+    #game_world.add_collision_pair('BC:Mouse', None, unitmanager)
 
     global enemymanager
     enemymanager = EnemyManager()

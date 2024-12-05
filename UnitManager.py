@@ -50,6 +50,8 @@ class UnitManager:
         self.lizardcat_cooldown = -10.0
         self.titancat_cooldown = -18.0
 
+        self.selected_object = None
+
     def handle_event(self):
         events = get_events()
         for event in events:
@@ -112,6 +114,14 @@ class UnitManager:
                     if self.gold > 500:
                         self.gold -= 500
                         play_mode.tower.recover_tower()
+
+                game_world.add_collision_pair('BC:Mouse', None, self)
+
+            elif event.type == SDL_MOUSEBUTTONUP and event.button == SDL_BUTTON_LEFT:
+                game_world.remove_collision_object(self)
+                if self.selected_object:
+                    self.selected_object.remove_itself()
+                    self.selected_object = None
 
             elif event.type == SDL_MOUSEMOTION:
                 self.x, self.y = event.x, 600 - 1 - event.y  # y좌표 보정
@@ -347,6 +357,7 @@ class UnitManager:
                     unit = Cat()
                     game_world.add_object(unit)
                     game_world.add_collision_pair('BC:Enemy', unit, None)
+                    game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 100
                     self.unit_cooldown = get_time()
                     self.cat_cooldown = get_time()
@@ -435,3 +446,20 @@ class UnitManager:
                     self.unit_cooldown = get_time()
                     self.titancat_cooldown = get_time()
                     print('madetitancat')
+
+
+    def get_bb(self):
+        return self.x-1, self.y-1, self.x+1, self.y+1
+
+    def get_attack_bb(self):
+        return self.x-1, self.y-1, self.x+1, self.y+1
+
+    def handle_attack_collision(self, group, other):
+        if group == 'BC:Mouse':
+            other.x, other.y = self.x, self.y
+            self.selected_object = other
+            pass
+
+    def handle_hit_collision(self, group, other):
+        if group == 'BC:Mouse':
+            pass

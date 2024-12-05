@@ -172,3 +172,6 @@ class Cat:
 
     def take_damage(self, attack):
         self.hp -= attack
+
+    def remove_itself(self):
+        game_world.remove_object(self)
