@@ -11,6 +11,7 @@ class Tower:
             self.image = load_image('Resource/Buildings_BC/Mobile - The Battle Cats - Cat Base.png')
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 12)
         self.x, self.y = 70, 120
+        self.level = 1
         self.hp = 800
         self.attack = 0
         self.hitted = False
@@ -35,6 +36,16 @@ class Tower:
         self.font.draw(x, y + 1, text, (0, 0, 0))  # 위
         self.font.draw(x, y, text, (0, 196, 255))
 
+        x, y = self.x - 25, self.y + 130
+        text = f'Level: {self.level}'
+        if self.level == 5:
+            text = f'Level: MAX!!'
+        self.font.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
+        self.font.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
+        self.font.draw(x, y - 1, text, (0, 0, 0))  # 아래
+        self.font.draw(x, y + 1, text, (0, 0, 0))  # 위
+        self.font.draw(x, y, text, (255, 223, 99))
+
     def get_bb(self):
         return self.x-30, self.y-100, self.x+30, self.y+20
     def get_attack_bb(self):
@@ -56,3 +67,7 @@ class Tower:
 
     def recover_tower(self):
         self.hp += 200
+
+    def tower_levelup(self):
+        if self.level < 5:
+            self.level += 1

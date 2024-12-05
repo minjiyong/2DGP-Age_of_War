@@ -19,11 +19,16 @@ class UnitManager:
         self.skillimage = load_image('Resource/Units_BC/3DS - Puzzle & Dragons Super Mario Bros Edition - Skill Icons.png')
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 20)
         self.moneyfont = load_font('Resource/Font/NanumSquareRoundR.ttf', 15)
-        self.gold = 10000
         self.x, self.y = 0, 0
         self.display_bounding_box = True
 
+        self.gold = 499
+        self.gold_interval = 1
+        self.interval = 0.1
+        self.gold_upgrade_cost = 500
+
         self.play_time = get_time()
+        self.last_update_time = 0
         self.game_time = 0
 
         self.cat_unlock = False
@@ -97,7 +102,12 @@ class UnitManager:
                         self.make_Titan_Cat()
 
                 elif 33 < self.x < 106 and 452 < self.y < 508:
-                    pass
+                    if play_mode.tower.level < 5:
+                        if self.gold > self.gold_upgrade_cost:
+                            self.gold -= self.gold_upgrade_cost
+                            self.gold_upgrade_cost += 100
+                            self.gold_interval += 1
+                            play_mode.tower.tower_levelup()
                 elif 111 < self.x < 184 and 452 < self.y < 508:
                     if self.gold > 500:
                         self.gold -= 500
@@ -108,6 +118,14 @@ class UnitManager:
 
 
     def update(self):
+        # 시간 증가
+        current_time = get_time()
+        self.game_time = int(current_time - self.play_time)
+
+        # 시간에 따른 돈 증가
+        if  current_time - self.last_update_time >= self.interval:
+            self.gold += self.gold_interval
+            self.last_update_time = current_time
         pass
 
     def draw(self):
@@ -122,7 +140,6 @@ class UnitManager:
 
         #play time
         x, y = 1380, 560
-        self.game_time = int(get_time() - self.play_time)
         text = f'Time: {self.game_time}'
         self.font.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
         self.font.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
@@ -293,7 +310,7 @@ class UnitManager:
         #skill - gold
         self.skillimage.clip_composite_draw(0, 56, 73, 56, 0, '', 70, 480, 73, 56)
         x, y = 62, 463
-        text = f'500원'
+        text = f'{self.gold_upgrade_cost}원'
         self.moneyfont.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
         self.moneyfont.draw(x + 1, y, text, (0, 0, 0))  # 오른쪽
         self.moneyfont.draw(x, y - 1, text, (0, 0, 0))  # 아래
