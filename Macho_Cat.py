@@ -107,6 +107,34 @@ class Idle:
             unit.image.clip_composite_draw(68 + 57 + 221, 242, 51, 50, 0, 'h', unit.x, unit.y, 51, 50)
         pass
 
+class newIdle:
+    @staticmethod
+    def enter(unit, e):
+        if start_event(e):
+            if not unit.enemy:
+                unit.dir = 1
+            elif unit.enemy:
+                unit.dir = -1
+        unit.frame = 0
+        unit.wait_time = get_time()
+        pass
+    @staticmethod
+    def exit(unit, e):
+        pass
+    @staticmethod
+    def do(unit):
+        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
+        pass
+    @staticmethod
+    def draw(unit):
+        if int(unit.frame) == 0:
+            unit.image.clip_composite_draw(221, 242, 57, 50, 0, 'h', unit.x, unit.y, 57, 50)
+        elif int(unit.frame) == 1:
+            unit.image.clip_composite_draw(57 + 221, 242, 68, 50, 0, 'h', unit.x, unit.y, 68, 50)
+        elif int(unit.frame) == 2:
+            unit.image.clip_composite_draw(68 + 57 + 221, 242, 51, 50, 0, 'h', unit.x, unit.y, 51, 50)
+        pass
+
 
 # 아군 유닛
 class Macho_Cat:
@@ -129,9 +157,9 @@ class Macho_Cat:
         self.state_machine.start(AutoRun)
         self.state_machine.set_transitions(
             {
-                AutoRun: {collision: Attack},
-                Attack: {collision: Attack, time_out: Idle},
-                Idle: {collision: Attack, time_out: AutoRun}
+                AutoRun: {collision: Attack, make_Idle: newIdle},
+                Attack: {collision: Attack, time_out: Idle, make_Idle: newIdle},
+                Idle: {collision: Attack, time_out: AutoRun, make_Idle: newIdle}
             }
         )
 
@@ -184,3 +212,6 @@ class Macho_Cat:
 
     def take_damage(self, attack):
         self.hp -= attack
+
+    def remove_itself(self):
+        game_world.remove_object(self)

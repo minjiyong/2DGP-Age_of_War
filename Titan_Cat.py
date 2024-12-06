@@ -108,6 +108,33 @@ class Idle:
         unit.image.clip_composite_draw(2, 455, 92, 194, 0, 'h', unit.x, unit.y, 92, 194)
         pass
 
+class newIdle:
+    @staticmethod
+    def enter(unit, e):
+        if start_event(e):
+            if not unit.enemy:
+                unit.dir = 1
+            elif unit.enemy:
+                unit.dir = -1
+        unit.frame = 0
+        unit.wait_time = get_time()
+        pass
+    @staticmethod
+    def exit(unit, e):
+        pass
+    @staticmethod
+    def do(unit):
+        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
+        pass
+    @staticmethod
+    def draw(unit):
+        if int(unit.frame) == 1:
+            unit.image.clip_composite_draw(int(unit.frame) * 74 + 96, 455, 74, 194, 0, 'h', unit.x - 5, unit.y - 15, 74, 194)
+        elif int(unit.frame) == 0 or 2:
+            unit.image.clip_composite_draw(int(unit.frame) * 74 + 96, 455, 74, 194, 0, 'h', unit.x - 6, unit.y - 16, 74, 194)
+        unit.image.clip_composite_draw(2, 455, 92, 194, 0, 'h', unit.x, unit.y, 92, 194)
+        pass
+
 # 아군 유닛
 class Titan_Cat:
     image = None
@@ -129,9 +156,9 @@ class Titan_Cat:
         self.state_machine.start(AutoRun)
         self.state_machine.set_transitions(
             {
-                AutoRun: {collision: Attack},
-                Attack: {collision: Attack, time_out: Idle},
-                Idle: {collision: Attack, time_out: AutoRun}
+                AutoRun: {collision: Attack, make_Idle: newIdle},
+                Attack: {collision: Attack, time_out: Idle, make_Idle: newIdle},
+                Idle: {collision: Attack, time_out: AutoRun, make_Idle: newIdle}
             }
         )
 
@@ -184,3 +211,6 @@ class Titan_Cat:
 
     def take_damage(self, attack):
         self.hp -= attack
+
+    def remove_itself(self):
+        game_world.remove_object(self)

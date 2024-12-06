@@ -94,6 +94,29 @@ class Idle:
         unit.image.clip_composite_draw(int(unit.frame) * 50, 242, 50, 50, 0, 'h', unit.x, unit.y, 50, 50)
         pass
 
+class newIdle:
+    @staticmethod
+    def enter(unit, e):
+        if start_event(e):
+            if not unit.enemy:
+                unit.dir = 1
+            elif unit.enemy:
+                unit.dir = -1
+        unit.frame = 0
+        unit.wait_time = get_time()
+        pass
+    @staticmethod
+    def exit(unit, e):
+        pass
+    @staticmethod
+    def do(unit):
+        unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
+        pass
+    @staticmethod
+    def draw(unit):
+        unit.image.clip_composite_draw(int(unit.frame) * 50, 242, 50, 50, 0, 'h', unit.x, unit.y, 50, 50)
+        pass
+
 
 # 아군 유닛
 class Cat:
@@ -116,9 +139,9 @@ class Cat:
         self.state_machine.start(AutoRun)
         self.state_machine.set_transitions(
             {
-                AutoRun: {collision: Attack},
-                Attack: {collision: Attack, time_out: Idle},
-                Idle: {collision: Attack, time_out: AutoRun}
+                AutoRun: {collision: Attack, make_Idle: newIdle},
+                Attack: {collision: Attack, time_out: Idle, make_Idle: newIdle},
+                Idle: {collision: Attack, time_out: AutoRun, make_Idle: newIdle}
             }
         )
 

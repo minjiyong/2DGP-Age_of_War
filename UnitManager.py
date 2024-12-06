@@ -22,7 +22,7 @@ class UnitManager:
         self.x, self.y = 0, 0
         self.display_bounding_box = True
 
-        self.gold = 499
+        self.gold = 11499
         self.gold_interval = 1
         self.interval = 0.1
         self.gold_upgrade_cost = 500
@@ -51,6 +51,8 @@ class UnitManager:
         self.titancat_cooldown = -18.0
 
         self.selected_object = None
+        self.mix1 = None
+        self.mix2 = None
 
     def handle_event(self):
         events = get_events()
@@ -115,11 +117,108 @@ class UnitManager:
                         self.gold -= 500
                         play_mode.tower.recover_tower()
 
+                elif 189 < self.x < 262 and 392 < self.y < 448:
+                    # 둘다 넣었으면 -> 조합식에 따라 새로운 거 해금
+                    if self.mix1 and self.mix2:
+                        pass
+                    # 둘 중 하나라도 없으면
+                    elif self.mix1 and not self.mix2:
+                        self.mix1.remove_itself()
+                    elif not self.mix1 and self.mix2:
+                        self.mix2.remove_itself()
+                    # 둘 다 없으면
+                    self.mix1 = None
+                    self.mix2 = None
+
                 game_world.add_collision_pair('BC:Mouse', None, self)
 
             elif event.type == SDL_MOUSEBUTTONUP and event.button == SDL_BUTTON_LEFT:
                 game_world.remove_collision_object(self)
                 if self.selected_object:
+                    if 33 < self.x < 106 and 392 < self.y < 448:
+                        if isinstance(self.selected_object, Cat) and not self.mix1:
+                            self.mix1 = Cat()
+                            self.mix1.x, self.mix1.y = 70, 420
+                            self.mix1.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix1)
+                        elif isinstance(self.selected_object, Macho_Cat) and not self.mix1:
+                            self.mix1 = Macho_Cat()
+                            self.mix1.x, self.mix1.y = 70, 420
+                            self.mix1.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix1)
+                        elif isinstance(self.selected_object, Tank_Cat) and not self.mix1:
+                            self.mix1 = Tank_Cat()
+                            self.mix1.x, self.mix1.y = 70, 420
+                            self.mix1.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix1)
+                        elif isinstance(self.selected_object, Axe_Cat) and not self.mix1:
+                            self.mix1 = Axe_Cat()
+                            self.mix1.x, self.mix1.y = 70, 420
+                            self.mix1.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix1)
+                        elif isinstance(self.selected_object, Knight_Cat) and not self.mix1:
+                            self.mix1 = Knight_Cat()
+                            self.mix1.x, self.mix1.y = 70, 420
+                            self.mix1.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix1)
+                        elif isinstance(self.selected_object, Cow_Cat) and not self.mix1:
+                            self.mix1 = Cow_Cat()
+                            self.mix1.x, self.mix1.y = 70, 420
+                            self.mix1.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix1)
+                        elif isinstance(self.selected_object, Lizard_Cat) and not self.mix1:
+                            self.mix1 = Lizard_Cat()
+                            self.mix1.x, self.mix1.y = 70, 420
+                            self.mix1.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix1)
+                        elif isinstance(self.selected_object, Titan_Cat) and not self.mix1:
+                            self.mix1 = Titan_Cat()
+                            self.mix1.x, self.mix1.y = 70, 420
+                            self.mix1.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix1)
+
+                    elif 111 < self.x < 184 and 392 < self.y < 448:
+                        if isinstance(self.selected_object, Cat) and not self.mix2:
+                            self.mix2 = Cat()
+                            self.mix2.x, self.mix2.y = 148, 420
+                            self.mix2.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix2)
+                        elif isinstance(self.selected_object, Macho_Cat) and not self.mix2:
+                            self.mix2 = Macho_Cat()
+                            self.mix2.x, self.mix2.y = 148, 420
+                            self.mix2.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix2)
+                        elif isinstance(self.selected_object, Tank_Cat) and not self.mix2:
+                            self.mix2 = Tank_Cat()
+                            self.mix2.x, self.mix2.y = 148, 420
+                            self.mix2.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix2)
+                        elif isinstance(self.selected_object, Axe_Cat) and not self.mix2:
+                            self.mix2 = Axe_Cat()
+                            self.mix2.x, self.mix2.y = 148, 420
+                            self.mix2.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix2)
+                        elif isinstance(self.selected_object, Knight_Cat) and not self.mix2:
+                            self.mix2 = Knight_Cat()
+                            self.mix2.x, self.mix2.y = 148, 420
+                            self.mix2.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix2)
+                        elif isinstance(self.selected_object, Cow_Cat) and not self.mix2:
+                            self.mix2 = Cow_Cat()
+                            self.mix2.x, self.mix2.y = 148, 420
+                            self.mix2.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix2)
+                        elif isinstance(self.selected_object, Lizard_Cat) and not self.mix2:
+                            self.mix2 = Lizard_Cat()
+                            self.mix2.x, self.mix2.y = 148, 420
+                            self.mix2.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix2)
+                        elif isinstance(self.selected_object, Titan_Cat) and not self.mix2:
+                            self.mix2 = Titan_Cat()
+                            self.mix2.x, self.mix2.y = 148, 420
+                            self.mix2.state_machine.add_event(('IDLE', 0))
+                            game_world.add_object(self.mix2)
+
                     self.selected_object.remove_itself()
                     self.selected_object = None
 
@@ -338,6 +437,7 @@ class UnitManager:
         self.moneyfont.draw(x, y, text, (255, 223, 99))
 
         if self.display_bounding_box:
+            #unit
             draw_rectangle(33, 512, 106, 568)       # x - 37, x + 36
             draw_rectangle(111, 512, 184, 568)
             draw_rectangle(189, 512, 262, 568)
@@ -346,9 +446,13 @@ class UnitManager:
             draw_rectangle(423, 512, 496, 568)
             draw_rectangle(501, 512, 574, 568)
             draw_rectangle(579, 512, 652, 568)
-
+            #skill
             draw_rectangle(33, 452, 106, 508)
             draw_rectangle(111, 452, 184, 508)
+            #mix
+            draw_rectangle(33, 392, 106, 448)
+            draw_rectangle(111, 392, 184, 448)
+            draw_rectangle(189, 392, 262, 448)
 
     def make_Cat(self):
         if get_time() - self.unit_cooldown> 1.0:
@@ -370,6 +474,7 @@ class UnitManager:
                     unit = Macho_Cat()
                     game_world.add_object(unit)
                     game_world.add_collision_pair('BC:Enemy', unit, None)
+                    game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 150
                     self.unit_cooldown = get_time()
                     self.machocat_cooldown = get_time()
@@ -382,6 +487,7 @@ class UnitManager:
                     unit = Tank_Cat()
                     game_world.add_object(unit)
                     game_world.add_collision_pair('BC:Enemy', unit, None)
+                    game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 200
                     self.unit_cooldown = get_time()
                     self.tankcat_cooldown = get_time()
@@ -394,6 +500,7 @@ class UnitManager:
                     unit = Axe_Cat()
                     game_world.add_object(unit)
                     game_world.add_collision_pair('BC:Enemy', unit, None)
+                    game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 300
                     self.unit_cooldown = get_time()
                     self.axecat_cooldown = get_time()
@@ -406,6 +513,7 @@ class UnitManager:
                     unit = Knight_Cat()
                     game_world.add_object(unit)
                     game_world.add_collision_pair('BC:Enemy', unit, None)
+                    game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 450
                     self.unit_cooldown = get_time()
                     self.knightcat_cooldown = get_time()
@@ -418,6 +526,7 @@ class UnitManager:
                     unit = Cow_Cat()
                     game_world.add_object(unit)
                     game_world.add_collision_pair('BC:Enemy', unit, None)
+                    game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 400
                     self.unit_cooldown = get_time()
                     self.cowcat_cooldown = get_time()
@@ -430,6 +539,7 @@ class UnitManager:
                     unit = Lizard_Cat()
                     game_world.add_object(unit)
                     game_world.add_collision_pair('BC:Enemy', unit, None)
+                    game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 1000
                     self.unit_cooldown = get_time()
                     self.lizardcat_cooldown = get_time()
@@ -442,6 +552,7 @@ class UnitManager:
                     unit = Titan_Cat()
                     game_world.add_object(unit)
                     game_world.add_collision_pair('BC:Enemy', unit, None)
+                    game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 2000
                     self.unit_cooldown = get_time()
                     self.titancat_cooldown = get_time()

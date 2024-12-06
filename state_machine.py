@@ -19,6 +19,9 @@ def non_collision(e):
 # 체력이 0이 됐을 때 - 사망
 def death(e):
     return e[0] == 'DEATH'
+
+def make_Idle(e):
+    return e[0] == 'IDLE'
 # 만들어야 되는 상태 목록
 
 # 상태 머신을 처리, 관리해주는 클래스
