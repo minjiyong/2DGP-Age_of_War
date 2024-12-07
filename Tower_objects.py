@@ -18,6 +18,9 @@ class Tower:
 
     def update(self):
         if self.hp <= 0:
+            play_mode.background.bgm.stop()
+            play_mode.unitmanager.lose_sound.play()
+            play_mode.unitmanager.show_lose = True
             game_world.remove_object(self)
 
     def draw(self):
@@ -83,12 +86,15 @@ class EnemyTower:
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 12)
         self.x, self.y = 1450, 70
         self.level = 1
-        self.hp = 2500
+        self.hp = 2000
         self.attack = 0
         self.hitted = False
 
     def update(self):
         if self.hp <= 0:
+            play_mode.background.bgm.stop()
+            play_mode.unitmanager.win_sound.play()
+            play_mode.unitmanager.show_win = True
             game_world.remove_object(self)
 
     def draw(self):

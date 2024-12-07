@@ -23,6 +23,8 @@ class UnitManager:
         self.image = load_image('Resource/Units_BC/Mobile - The Battle Cats - Cat Icons.png')
         self.skillimage = load_image('Resource/Units_BC/3DS - Puzzle & Dragons Super Mario Bros Edition - Skill Icons.png')
         self.godimage = load_image('Resource/Units_BC/Mobile - The Battle Cats - God Cat.png')
+        self.winimage = load_image('Resource/backgrounds/Wii U - Mario & Sonic at the Sochi 2014 Olympic Winter Games - Win & Lose.png')
+
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 20)
         self.moneyfont = load_font('Resource/Font/NanumSquareRoundR.ttf', 15)
 
@@ -38,6 +40,10 @@ class UnitManager:
         self.unit_attack_sound.set_volume(20)
         self.unit_dead_sound = load_wav('Resource/sounds/Snd023.ogg')
         self.unit_dead_sound.set_volume(20)
+        self.win_sound = load_wav('Resource/sounds/VictoryChime.ogg')
+        self.win_sound.set_volume(40)
+        self.lose_sound = load_wav('Resource/sounds/Defeat.ogg')
+        self.lose_sound.set_volume(40)
 
         self.x, self.y = 0, 0
         self.display_bounding_box = False
@@ -77,6 +83,9 @@ class UnitManager:
         self.selected_object = None
         self.mix1 = None
         self.mix2 = None
+
+        self.show_win = False
+        self.show_lose = False
 
     def handle_event(self):
         events = get_events()
@@ -517,6 +526,19 @@ class UnitManager:
         # mixbutton
         self.skillimage.clip_composite_draw(0, 56, 73, 56, 0, '', 226, 420, 73, 56)
 
+        # win/lose
+        if self.show_win:
+            self.winimage.clip_draw(843, 2041, 400, 136, 768, 300, 400, 136)
+            update_canvas()
+            delay(7.0)
+            game_framework.quit()
+            pass
+        if self.show_lose:
+            self.winimage.clip_draw(843, 1906, 400, 136, 768, 300, 400, 136)
+            update_canvas()
+            delay(7.0)
+            game_framework.quit()
+            pass
 
         if self.display_bounding_box:
             #unit

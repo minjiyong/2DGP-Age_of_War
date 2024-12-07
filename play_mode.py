@@ -1,18 +1,10 @@
-import random
-
 from pico2d import *
-import game_framework
 
 import game_world
+import game_framework
 from Backgrounds import Background
-from Croco import Croco
-from Dog import Dog
 from EnemyManager import EnemyManager
-from Hippo import Hippo
-from Macho_Cat import Macho_Cat
-from Snake import Snake
 from Tower_objects import Tower, EnemyTower
-from Cat import Cat
 from UnitManager import UnitManager
 
 
@@ -49,7 +41,7 @@ def finish():
 
 
 def update():
-    game_world.update()         #소년과 볼 위치가 다 업데이트 완료
+    game_world.update()
     game_world.handle_collisions()
 
 
