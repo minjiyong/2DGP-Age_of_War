@@ -14,13 +14,13 @@ class EnemyManager:
         self.enemy_queue = []  # 적 생성 큐
 
         self.Dog_spawn_cooldown = get_time()
-        self.Dog_max_cooldown = 10.0
+        self.Dog_max_cooldown = 15.0
 
         self.Croco_spawn_cooldown = get_time()
-        self.Croco_max_cooldown = 13.0
+        self.Croco_max_cooldown = 18.0
 
         self.Hippo_spawn_cooldown = get_time()
-        self.Hippo_max_cooldown = 120.0
+        self.Hippo_max_cooldown = 180.0
 
         self.Snake_spawn_cooldown = get_time()
         self.Snake_max_cooldown = 170.0
@@ -74,15 +74,16 @@ class EnemyManager:
             self.add_to_queue("Snake")
             self.Snake_spawn_cooldown = get_time()
 
-        if play_mode.unitmanager.game_time == 30:
-            self.Dog_max_cooldown = 8.0
-            self.Snake_max_cooldown = 17.0
-
         if play_mode.unitmanager.game_time == 60:
+            self.Dog_max_cooldown = 10.0
+            self.Snake_max_cooldown = 23.0
+
+        if play_mode.unitmanager.game_time == 90:
             self.Dog_max_cooldown = 7.0
 
-        if play_mode.unitmanager.game_time == 100:
+        if play_mode.unitmanager.game_time == 120:
             self.Dog_max_cooldown = 5.0
+            self.Croco_max_cooldown = 14.0
 
         if play_mode.unitmanager.game_time == 200:
             self.Hippo_max_cooldown = 100.0

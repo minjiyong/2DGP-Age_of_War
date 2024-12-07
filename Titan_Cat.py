@@ -32,6 +32,7 @@ class Attack:
     def do(unit):
         unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
         if unit.hp <= 0:
+            play_mode.unitmanager.unit_dead_sound.play()
             game_world.remove_object(unit)
         if get_time() - unit.wait_time > 2.5:
             unit.state_machine.add_event(('TIME_OUT', 0))
@@ -66,6 +67,7 @@ class AutoRun:
 
         unit.x += unit.dir * RUN_SPEED_PPS * game_framework.frame_time
         if unit.hp <= 0:
+            play_mode.unitmanager.unit_dead_sound.play()
             game_world.remove_object(unit)
         pass
     @staticmethod
@@ -95,6 +97,7 @@ class Idle:
     def do(unit):
         unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 3
         if unit.hp <= 0:
+            play_mode.unitmanager.unit_dead_sound.play()
             game_world.remove_object(unit)
         if get_time() - unit.wait_time > 0.5:
             unit.state_machine.add_event(('TIME_OUT', 0))
@@ -196,6 +199,7 @@ class Titan_Cat:
             if current_time - self.last_attack_time > self.attack_cooldown and int(self.frame) == 2:
                 if self.state_machine.cur_state is not Attack:
                     self.state_machine.add_event(('MEET_OTHER_TEAM', 0))
+                    play_mode.unitmanager.unit_attack_sound.play()
 
                 other.hitted = True
                 self.last_attack_time = current_time

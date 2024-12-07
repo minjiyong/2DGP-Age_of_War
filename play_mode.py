@@ -11,7 +11,7 @@ from EnemyManager import EnemyManager
 from Hippo import Hippo
 from Macho_Cat import Macho_Cat
 from Snake import Snake
-from Tower_objects import Tower
+from Tower_objects import Tower, EnemyTower
 from Cat import Cat
 from UnitManager import UnitManager
 
@@ -28,7 +28,6 @@ def init():
     global unitmanager
     unitmanager = UnitManager()
     game_world.add_object(unitmanager, 0)
-    #game_world.add_collision_pair('BC:Mouse', None, unitmanager)
 
     global enemymanager
     enemymanager = EnemyManager()
@@ -39,10 +38,10 @@ def init():
     game_world.add_object(tower, 0)
     game_world.add_collision_pair('BC:Enemy', tower, None)
 
-    global enemy
-    enemy = Snake()
-    game_world.add_object(enemy, 1)
-    game_world.add_collision_pair('BC:Enemy', None, enemy)
+    global etower
+    etower = EnemyTower()
+    game_world.add_object(etower, 0)
+    game_world.add_collision_pair('BC:Enemy', None, etower)
 
 def finish():
     game_world.clear()

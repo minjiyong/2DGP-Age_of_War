@@ -33,6 +33,7 @@ class Attack:
     def do(unit):
         unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 4
         if unit.hp <= 0:
+            play_mode.unitmanager.unit_dead_sound.play()
             game_world.remove_object(unit)
         if get_time() - unit.wait_time > 1.5:
             unit.state_machine.add_event(('TIME_OUT', 0))
@@ -63,6 +64,7 @@ class AutoRun:
         unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 4
         unit.x += unit.dir * RUN_SPEED_PPS * game_framework.frame_time
         if unit.hp <= 0:
+            play_mode.unitmanager.unit_dead_sound.play()
             game_world.remove_object(unit)
         pass
     @staticmethod
@@ -93,6 +95,7 @@ class Idle:
     def do(unit):
         unit.frame = (unit.frame + FRAMES_PER_ACTION*ACTION_PER_TIME*game_framework.frame_time) % 4
         if unit.hp <= 0:
+            play_mode.unitmanager.unit_dead_sound.play()
             game_world.remove_object(unit)
         if get_time() - unit.wait_time > 0.5:
             unit.state_machine.add_event(('TIME_OUT', 0))

@@ -15,6 +15,17 @@ def add_object(o, depth = 0):
 def add_objects(ol, depth = 0):
     world[depth] += ol
 
+def get_objects(depth=None):
+    """
+    특정 레이어나 전체 레이어에서 객체를 가져오는 함수.
+    - depth가 None이면 모든 레이어의 객체를 반환.
+    - 특정 depth 값이 주어지면 해당 레이어의 객체만 반환.
+    """
+    if depth is None:
+        return [obj for layer in world for obj in layer]
+    else:
+        return world[depth] if 0 <= depth < len(world) else []
+
 
 def update():
     for layer in world:

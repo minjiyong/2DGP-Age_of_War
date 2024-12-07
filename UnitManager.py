@@ -12,26 +12,46 @@ from Macho_Cat import Macho_Cat
 from Tank_Cat import Tank_Cat
 from Titan_Cat import Titan_Cat
 
+from Dog import Dog
+from Hippo import Hippo
+from Snake import Snake
+from Croco import Croco
+
 
 class UnitManager:
     def __init__(self):
         self.image = load_image('Resource/Units_BC/Mobile - The Battle Cats - Cat Icons.png')
         self.skillimage = load_image('Resource/Units_BC/3DS - Puzzle & Dragons Super Mario Bros Edition - Skill Icons.png')
+        self.godimage = load_image('Resource/Units_BC/Mobile - The Battle Cats - God Cat.png')
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 20)
         self.moneyfont = load_font('Resource/Font/NanumSquareRoundR.ttf', 15)
-        self.x, self.y = 0, 0
-        self.display_bounding_box = True
 
-        self.gold = 11499
+        self.buy_unit_sound = load_wav('Resource/sounds/Snd019.ogg')
+        self.buy_unit_sound.set_volume(40)
+        self.unlock_unit_sound = load_wav('Resource/sounds/Snd011.ogg')
+        self.unlock_unit_sound.set_volume(40)
+        self.buy_skill_sound = load_wav('Resource/sounds/Snd014.ogg')
+        self.buy_skill_sound.set_volume(40)
+        self.god_sound =  load_wav('Resource/sounds/Snd035.ogg')
+        self.god_sound.set_volume(70)
+        self.unit_attack_sound = load_wav('Resource/sounds/Snd020.ogg')
+        self.unit_attack_sound.set_volume(20)
+        self.unit_dead_sound = load_wav('Resource/sounds/Snd023.ogg')
+        self.unit_dead_sound.set_volume(20)
+
+        self.x, self.y = 0, 0
+        self.display_bounding_box = False
+
+        self.gold = 999
         self.gold_interval = 1
         self.interval = 0.1
-        self.gold_upgrade_cost = 500
+        self.gold_upgrade_cost = 200
 
         self.play_time = get_time()
         self.last_update_time = 0
         self.game_time = 0
 
-        self.cat_unlock = False
+        self.cat_unlock = True
         self.machocat_unlock = False
         self.tankcat_unlock = False
         self.axecat_unlock = False
@@ -50,6 +70,10 @@ class UnitManager:
         self.lizardcat_cooldown = -10.0
         self.titancat_cooldown = -18.0
 
+        self.god_cooldown = -200.0
+        self.draw_god = False
+        self.god_image_time = None
+
         self.selected_object = None
         self.mix1 = None
         self.mix2 = None
@@ -66,15 +90,6 @@ class UnitManager:
                     self.display_bounding_box = False
                 elif not self.display_bounding_box:
                     self.display_bounding_box = True
-                    #디버깅용 아군 전부 활성화
-                    self.cat_unlock = True
-                    self.machocat_unlock = True
-                    self.tankcat_unlock = True
-                    self.axecat_unlock = True
-                    self.knightcat_unlock = True
-                    self.cowcat_unlock = True
-                    self.lizardcat_unlock = True
-                    self.titancat_unlock = True
 
             # 왼쪽 마우스 버튼 클릭 시
             elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:
@@ -116,17 +131,56 @@ class UnitManager:
                     if self.gold > 500:
                         self.gold -= 500
                         play_mode.tower.recover_tower()
+                elif 189 < self.x < 262 and 452 < self.y < 508:
+                    if get_time() - self.god_cooldown > 200.0:
+                        self.draw_god = True
+                        self.god_sound.play()
+
+                        all_objects = game_world.get_objects(1)
+                        for obj in all_objects:
+                            if isinstance(obj, (Dog, Hippo, Croco, Snake)):  # 적 클래스 목록
+                                obj.hp -= 150
+                        self.god_cooldown = get_time()
+                        print('used skill - god')
 
                 elif 189 < self.x < 262 and 392 < self.y < 448:
                     # 둘다 넣었으면 -> 조합식에 따라 새로운 거 해금
                     if self.mix1 and self.mix2:
-                        pass
+                        #machocat = cat + cat
+                        if isinstance(self.mix1, Cat) and isinstance(self.mix2, Cat):
+                            self.machocat_unlock = True
+                            self.unlock_unit_sound.play()
+                        #tankcat = machocat + cat
+                        elif (isinstance(self.mix1, Macho_Cat) and isinstance(self.mix2, Cat)) or (isinstance(self.mix1, Cat) and isinstance(self.mix2, Macho_Cat)):
+                            self.tankcat_unlock = True
+                            self.unlock_unit_sound.play()
+                        #Axecat = machocat + machocat
+                        elif isinstance(self.mix1, Macho_Cat) and isinstance(self.mix2, Macho_Cat):
+                            self.axecat_unlock = True
+                            self.unlock_unit_sound.play()
+                        #knightcat = axecat + axecat
+                        elif isinstance(self.mix1, Axe_Cat) and isinstance(self.mix2, Axe_Cat):
+                            self.knightcat_unlock = True
+                            self.unlock_unit_sound.play()
+                        #cowcat = axecat + cat
+                        elif (isinstance(self.mix1, Axe_Cat) and isinstance(self.mix2, Cat)) or (isinstance(self.mix1, Cat) and isinstance(self.mix2, Axe_Cat)):
+                            self.cowcat_unlock = True
+                            self.unlock_unit_sound.play()
+                        #lizardcat = cowcat + cowcat
+                        elif isinstance(self.mix1, Cow_Cat) and isinstance(self.mix2, Cow_Cat):
+                            self.lizardcat_unlock = True
+                            self.unlock_unit_sound.play()
+                        #titancat = tankcat + knightcat
+                        elif (isinstance(self.mix1, Tank_Cat) and isinstance(self.mix2, Knight_Cat)) or (isinstance(self.mix1, Knight_Cat) and isinstance(self.mix2, Tank_Cat)):
+                            self.titancat_unlock = True
+                            self.unlock_unit_sound.play()
+
                     # 둘 중 하나라도 없으면
-                    elif self.mix1 and not self.mix2:
+                    if self.mix1:
                         self.mix1.remove_itself()
-                    elif not self.mix1 and self.mix2:
+                    if self.mix2:
                         self.mix2.remove_itself()
-                    # 둘 다 없으면
+
                     self.mix1 = None
                     self.mix2 = None
 
@@ -417,7 +471,7 @@ class UnitManager:
                 self.font.draw(x, y, text, (50, 50, 50))
 
         #skill - gold
-        self.skillimage.clip_composite_draw(0, 56, 73, 56, 0, '', 70, 480, 73, 56)
+        self.skillimage.clip_composite_draw(0, 168, 73, 56, 0, '', 70, 480, 73, 56)
         x, y = 62, 463
         text = f'{self.gold_upgrade_cost}원'
         self.moneyfont.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
@@ -427,7 +481,7 @@ class UnitManager:
         self.moneyfont.draw(x, y, text, (255, 223, 99))
 
         # skill - recover
-        self.skillimage.clip_composite_draw(0, 0, 73, 56, 0, '', 148, 480, 73, 56)
+        self.skillimage.clip_composite_draw(0, 112, 73, 56, 0, '', 148, 480, 73, 56)
         x, y = 140, 463
         text = f'500원'
         self.moneyfont.draw(x - 1, y, text, (0, 0, 0))  # 왼쪽
@@ -435,6 +489,34 @@ class UnitManager:
         self.moneyfont.draw(x, y - 1, text, (0, 0, 0))  # 아래
         self.moneyfont.draw(x, y + 1, text, (0, 0, 0))  # 위
         self.moneyfont.draw(x, y, text, (255, 223, 99))
+
+        # skill - god
+        self.skillimage.clip_composite_draw(74, 168, 73, 56, 0, '', 226, 480, 73, 56)
+        god_least_time = 200.0 - (get_time() - self.god_cooldown)
+        if god_least_time > 0.0:
+            x, y = 210, 480
+            text = f'{int(god_least_time) + 1}'
+            self.font.draw(x - 2, y, text, (255, 255, 255))  # 왼쪽
+            self.font.draw(x + 2, y, text, (255, 255, 255))  # 오른쪽
+            self.font.draw(x, y - 2, text, (255, 255, 255))  # 아래
+            self.font.draw(x, y + 2, text, (255, 255, 255))  # 위
+            self.font.draw(x, y, text, (50, 50, 50))
+        # 갓 스킬 시전 시
+        if self.draw_god:
+            if self.god_image_time == None:
+                self.god_image_time = get_time()
+            self.godimage.clip_composite_draw(0, 46, 278, 260, 0, 'h', 768, 300, 556, 520)
+            if get_time() - self.god_image_time > 3.0:
+                self.draw_god = False
+                self.god_image_time = None
+
+        # mix1
+        self.skillimage.clip_composite_draw(0, 0, 73, 56, 0, '', 70, 420, 73, 56)
+        # mix2
+        self.skillimage.clip_composite_draw(0, 0, 73, 56, 0, '', 148, 420, 73, 56)
+        # mixbutton
+        self.skillimage.clip_composite_draw(0, 56, 73, 56, 0, '', 226, 420, 73, 56)
+
 
         if self.display_bounding_box:
             #unit
@@ -449,6 +531,7 @@ class UnitManager:
             #skill
             draw_rectangle(33, 452, 106, 508)
             draw_rectangle(111, 452, 184, 508)
+            draw_rectangle(189, 452, 262, 508)
             #mix
             draw_rectangle(33, 392, 106, 448)
             draw_rectangle(111, 392, 184, 448)
@@ -463,6 +546,7 @@ class UnitManager:
                     game_world.add_collision_pair('BC:Enemy', unit, None)
                     game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 100
+                    self.buy_unit_sound.play()
                     self.unit_cooldown = get_time()
                     self.cat_cooldown = get_time()
                     print('madecat')
@@ -476,6 +560,7 @@ class UnitManager:
                     game_world.add_collision_pair('BC:Enemy', unit, None)
                     game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 150
+                    self.buy_unit_sound.play()
                     self.unit_cooldown = get_time()
                     self.machocat_cooldown = get_time()
                     print('mademachocat')
@@ -489,6 +574,7 @@ class UnitManager:
                     game_world.add_collision_pair('BC:Enemy', unit, None)
                     game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 200
+                    self.buy_unit_sound.play()
                     self.unit_cooldown = get_time()
                     self.tankcat_cooldown = get_time()
                     print('madetankcat')
@@ -502,6 +588,7 @@ class UnitManager:
                     game_world.add_collision_pair('BC:Enemy', unit, None)
                     game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 300
+                    self.buy_unit_sound.play()
                     self.unit_cooldown = get_time()
                     self.axecat_cooldown = get_time()
                     print('madeaxecat')
@@ -515,6 +602,7 @@ class UnitManager:
                     game_world.add_collision_pair('BC:Enemy', unit, None)
                     game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 450
+                    self.buy_unit_sound.play()
                     self.unit_cooldown = get_time()
                     self.knightcat_cooldown = get_time()
                     print('madeknightcat')
@@ -528,6 +616,7 @@ class UnitManager:
                     game_world.add_collision_pair('BC:Enemy', unit, None)
                     game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 400
+                    self.buy_unit_sound.play()
                     self.unit_cooldown = get_time()
                     self.cowcat_cooldown = get_time()
                     print('madecowcat')
@@ -541,6 +630,7 @@ class UnitManager:
                     game_world.add_collision_pair('BC:Enemy', unit, None)
                     game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 1000
+                    self.buy_unit_sound.play()
                     self.unit_cooldown = get_time()
                     self.lizardcat_cooldown = get_time()
                     print('madelizardcat')
@@ -554,6 +644,7 @@ class UnitManager:
                     game_world.add_collision_pair('BC:Enemy', unit, None)
                     game_world.add_collision_pair('BC:Mouse', unit, None)
                     self.gold -= 2000
+                    self.buy_unit_sound.play()
                     self.unit_cooldown = get_time()
                     self.titancat_cooldown = get_time()
                     print('madetitancat')
@@ -569,7 +660,6 @@ class UnitManager:
         if group == 'BC:Mouse':
             other.x, other.y = self.x, self.y
             self.selected_object = other
-            pass
 
     def handle_hit_collision(self, group, other):
         if group == 'BC:Mouse':
