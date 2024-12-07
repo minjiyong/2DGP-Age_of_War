@@ -24,6 +24,7 @@ class UnitManager:
         self.skillimage = load_image('Resource/Units_BC/3DS - Puzzle & Dragons Super Mario Bros Edition - Skill Icons.png')
         self.godimage = load_image('Resource/Units_BC/Mobile - The Battle Cats - God Cat.png')
         self.winimage = load_image('Resource/backgrounds/Wii U - Mario & Sonic at the Sochi 2014 Olympic Winter Games - Win & Lose.png')
+        self.cursorimage = load_image('Resource/backgrounds/PC Computer - SteamWorld Quest - Cursor.png')
 
         self.font = load_font('Resource/Font/Cinzel/static/Cinzel-ExtraBold.ttf', 20)
         self.moneyfont = load_font('Resource/Font/NanumSquareRoundR.ttf', 15)
@@ -301,6 +302,8 @@ class UnitManager:
         pass
 
     def draw(self):
+        self.cursorimage.clip_draw(132, 7, 52, 52, self.x + 10, self.y - 10, 26, 26)
+
         #gold
         x, y  = 1380, 530
         text = f'Gold: {self.gold}'
