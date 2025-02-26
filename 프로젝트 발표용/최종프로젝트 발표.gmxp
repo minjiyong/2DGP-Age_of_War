@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CROASTERP Version="1, 0, 0, 6" RatioX="0.45290422" RatioY="0.50393701" Fps="60" Resolution="1920:1080" Relative="0">
+    <CRClipArr Count="3">
+        <CRClip Type="3" Path="D:\TUK\2-2\2DGP\2DGP-프로젝트 발표 관련\2024-12-08 19-43-46.mkv" ClipLength="2927"/>
+        <CRClip Type="3" Path="D:\TUK\2-2\2DGP\2DGP-프로젝트 발표 관련\KakaoTalk_20241208_153311676.mp4" ClipLength="8353"/>
+        <CRClip Type="3" Path="D:\TUK\2-2\2DGP\2DGP-프로젝트 발표 관련\KakaoTalk_20241208_153850164.mp4" ClipLength="2365"/>
+    </CRClipArr>
+    <CROwneUnitArr Count="6">
+        <CROwneUnit Type="12">
+            <CRCUnitArr Name="실제 플레이 영상(x 10.0 배속)" ClipLength="1040" KindID="1" Type="6" VID505="0" VID506="1" VID508="1" VID507="1" VID509="0" VID510="1" VID512="1" VID511="1" VID502="0" VID503="100" VID600="0.32968751" VID601="0.85000002">
+                <GPObjectArr Count="1">
+                    <GPObject Type="1">
+                        <GPObjectAtt Type="1" VID100="1">
+                            <GPUnitAttArr Count="4">
+                                <GCUnitPool Type="4" Count="1">
+                                    <GCUnit Type="4" VID0="1" SubType="1" VID100="-1"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="1" Count="1">
+                                    <GCUnit Type="1" VID0="1" VID100="2" VID101="70" VID102="나눔고딕"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="2" Count="1">
+                                    <GCUnit Type="2" VID0="0" SubType="1" VID100="0.30000001" VID101="-16777216"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="5" Count="1">
+                                    <GCUnit Type="5" VID0="0" VID100="0.30000001" VID101="-16777216" VID102="9"/>
+                                </GCUnitPool>
+                            </GPUnitAttArr>
+                            <GCUnitArr Count="1">
+                                <GCUnit GPCUType="5" Type="4" VID0="0" SubType="1" VID100="-16777216"/>
+                            </GCUnitArr>
+                        </GPObjectAtt>
+                        <GPStrLineArr Count="1">
+                            <GPStrLine Count="1">
+                                <GPString VID7="실제 플레이 영상(x 10.0 배속)" VID1="0" VID2="0" VID4="0" VID6="0"/>
+                            </GPStrLine>
+                        </GPStrLineArr>
+                    </GPObject>
+                </GPObjectArr>
+            </CRCUnitArr>
+        </CROwneUnit>
+        <CROwneUnit Type="12">
+            <CRCUnitArr Name="인터뷰 영상 - 단점" ClipLength="695" KindID="1" Type="6" VID505="0" VID506="1" VID508="1" VID507="1" VID509="0" VID510="1" VID512="1" VID511="1" VID502="0" VID503="100" VID600="0.39583334" VID601="0.85000002">
+                <GPObjectArr Count="1">
+                    <GPObject Type="1">
+                        <GPObjectAtt Type="1" VID100="1">
+                            <GPUnitAttArr Count="4">
+                                <GCUnitPool Type="4" Count="1">
+                                    <GCUnit Type="4" VID0="1" SubType="1" VID100="-1"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="1" Count="1">
+                                    <GCUnit Type="1" VID0="1" VID100="2" VID101="70" VID102="나눔고딕"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="2" Count="1">
+                                    <GCUnit Type="2" VID0="0" SubType="1" VID100="0.30000001" VID101="-16777216"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="5" Count="1">
+                                    <GCUnit Type="5" VID0="0" VID100="0.30000001" VID101="-16777216" VID102="9"/>
+                                </GCUnitPool>
+                            </GPUnitAttArr>
+                            <GCUnitArr Count="1">
+                                <GCUnit GPCUType="5" Type="4" VID0="0" SubType="1" VID100="-16777216"/>
+                            </GCUnitArr>
+                        </GPObjectAtt>
+                        <GPStrLineArr Count="1">
+                            <GPStrLine Count="1">
+                                <GPString VID7="인터뷰 영상 - 단점" VID1="0" VID2="0" VID4="0" VID6="0"/>
+                            </GPStrLine>
+                        </GPStrLineArr>
+                    </GPObject>
+                </GPObjectArr>
+            </CRCUnitArr>
+        </CROwneUnit>
+        <CROwneUnit Type="12">
+            <CRCUnitArr Name="고양이를 가져가다가 사라지는 버그 마우스를 너무 빨리 움직이면 충돌 로직이 이벤트 처리를 따라가지 못하는 것으로 예상됩니다 (PPT에 표기)" ClipLength="457" KindID="1" Type="6" VID505="0" VID506="1" VID508="1" VID507="1" VID509="0" VID510="1" VID512="1" VID511="1" VID502="0" VID503="100" VID600="0.22499999" VID601="0.74907404">
+                <GPObjectArr Count="1">
+                    <GPObject Type="1">
+                        <GPObjectAtt Type="1" VID100="1">
+                            <GPUnitAttArr Count="4">
+                                <GCUnitPool Type="4" Count="1">
+                                    <GCUnit Type="4" VID0="1" SubType="1" VID100="-1"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="1" Count="1">
+                                    <GCUnit Type="1" VID0="1" VID100="2" VID101="70" VID102="나눔고딕"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="2" Count="1">
+                                    <GCUnit Type="2" VID0="0" SubType="1" VID100="0.30000001" VID101="-16777216"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="5" Count="1">
+                                    <GCUnit Type="5" VID0="0" VID100="0.30000001" VID101="-16777216" VID102="9"/>
+                                </GCUnitPool>
+                            </GPUnitAttArr>
+                            <GCUnitArr Count="1">
+                                <GCUnit GPCUType="5" Type="4" VID0="0" SubType="1" VID100="-16777216"/>
+                            </GCUnitArr>
+                        </GPObjectAtt>
+                        <GPStrLineArr Count="4">
+                            <GPStrLine Count="1">
+                                <GPString VID7="고양이를 가져가다가 사라지는 버그" VID1="0" VID2="0" VID4="0" VID6="0"/>
+                            </GPStrLine>
+                            <GPStrLine Count="1">
+                                <GPString VID7="마우스를 너무 빨리 움직이면 충돌 로직이" VID1="0" VID2="0" VID4="0" VID6="0"/>
+                            </GPStrLine>
+                            <GPStrLine Count="1">
+                                <GPString VID7="이벤트 처리를 따라가지 못하는 것으로 예상됩니다" VID1="0" VID2="0" VID4="0" VID6="0"/>
+                            </GPStrLine>
+                            <GPStrLine Count="1">
+                                <GPString VID7="(PPT에 표기)" VID1="0" VID2="0" VID4="0" VID6="0"/>
+                            </GPStrLine>
+                        </GPStrLineArr>
+                    </GPObject>
+                </GPObjectArr>
+            </CRCUnitArr>
+        </CROwneUnit>
+        <CROwneUnit Type="12">
+            <CRCUnitArr Name="장점소개" ClipLength="533" KindID="1" Type="6" VID505="0" VID506="1" VID508="1" VID507="1" VID509="0" VID510="1" VID512="1" VID511="1" VID502="0" VID503="100" VID600="0.44687501" VID601="0.85000002">
+                <GPObjectArr Count="1">
+                    <GPObject Type="1">
+                        <GPObjectAtt Type="1" VID100="1">
+                            <GPUnitAttArr Count="4">
+                                <GCUnitPool Type="4" Count="1">
+                                    <GCUnit Type="4" VID0="1" SubType="1" VID100="-1"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="1" Count="1">
+                                    <GCUnit Type="1" VID0="1" VID100="2" VID101="70" VID102="나눔고딕"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="2" Count="1">
+                                    <GCUnit Type="2" VID0="0" SubType="1" VID100="0.30000001" VID101="-16777216"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="5" Count="1">
+                                    <GCUnit Type="5" VID0="0" VID100="0.30000001" VID101="-16777216" VID102="9"/>
+                                </GCUnitPool>
+                            </GPUnitAttArr>
+                            <GCUnitArr Count="1">
+                                <GCUnit GPCUType="5" Type="4" VID0="0" SubType="1" VID100="-16777216"/>
+                            </GCUnitArr>
+                        </GPObjectAtt>
+                        <GPStrLineArr Count="1">
+                            <GPStrLine Count="1">
+                                <GPString VID7="장점소개" VID1="0" VID2="0" VID4="0" VID6="0"/>
+                            </GPStrLine>
+                        </GPStrLineArr>
+                    </GPObject>
+                </GPObjectArr>
+            </CRCUnitArr>
+        </CROwneUnit>
+        <CROwneUnit Type="12">
+            <CRCUnitArr Name="평점 9 /10!" ClipLength="240" KindID="1" Type="6" VID505="0" VID506="1" VID508="1" VID507="1" VID509="0" VID510="1" VID512="1" VID511="1" VID502="0" VID503="100" VID600="0.43020833" VID601="0.85000002">
+                <GPObjectArr Count="1">
+                    <GPObject Type="1">
+                        <GPObjectAtt Type="1" VID100="1">
+                            <GPUnitAttArr Count="4">
+                                <GCUnitPool Type="4" Count="1">
+                                    <GCUnit Type="4" VID0="1" SubType="1" VID100="-1"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="1" Count="1">
+                                    <GCUnit Type="1" VID0="1" VID100="2" VID101="70" VID102="나눔고딕"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="2" Count="1">
+                                    <GCUnit Type="2" VID0="0" SubType="1" VID100="0.30000001" VID101="-16777216"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="5" Count="1">
+                                    <GCUnit Type="5" VID0="0" VID100="0.30000001" VID101="-16777216" VID102="9"/>
+                                </GCUnitPool>
+                            </GPUnitAttArr>
+                            <GCUnitArr Count="1">
+                                <GCUnit GPCUType="5" Type="4" VID0="0" SubType="1" VID100="-16777216"/>
+                            </GCUnitArr>
+                        </GPObjectAtt>
+                        <GPStrLineArr Count="1">
+                            <GPStrLine Count="1">
+                                <GPString VID7="평점 9 /10!" VID1="0" VID2="0" VID4="0" VID6="0"/>
+                            </GPStrLine>
+                        </GPStrLineArr>
+                    </GPObject>
+                </GPObjectArr>
+            </CRCUnitArr>
+        </CROwneUnit>
+        <CROwneUnit Type="12">
+            <CRCUnitArr Name="냥코대전쟁 지금까지  봐주셔서 감사합니다~" ClipLength="579" KindID="5" Type="6" VID505="10" VID506="1" VID508="1" VID507="1" VID509="0" VID510="1" VID512="1" VID511="1" VID502="0" VID503="100" VID600="0.24062499" VID601="0.083333343">
+                <GPObjectArr Count="1">
+                    <GPObject Type="1">
+                        <GPObjectAtt Type="1" VID100="0">
+                            <GPUnitAttArr Count="4">
+                                <GCUnitPool Type="4" Count="1">
+                                    <GCUnit Type="4" VID0="1" SubType="1" VID100="-1"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="1" Count="1">
+                                    <GCUnit Type="1" VID0="1" VID100="2" VID101="280" VID102="나눔고딕"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="2" Count="1">
+                                    <GCUnit Type="2" VID0="1" SubType="1" VID100="0.1" VID101="-14277082"/>
+                                </GCUnitPool>
+                                <GCUnitPool Type="5" Count="1">
+                                    <GCUnit Type="5" VID0="1" VID100="0.15000001" VID101="-15987700" VID102="9"/>
+                                </GCUnitPool>
+                            </GPUnitAttArr>
+                            <GCUnitArr Count="1">
+                                <GCUnit GPCUType="5" Type="4" VID0="0" SubType="1" VID100="-16777216"/>
+                            </GCUnitArr>
+                        </GPObjectAtt>
+                        <GPStrLineArr Count="4">
+                            <GPStrLine Count="1">
+                                <GPString VID7="냥코대전쟁" VID1="0" VID2="0" VID4="0" VID6="0"/>
+                            </GPStrLine>
+                            <GPStrLine Count="1">
+                                <GPString VID7="지금까지 " VID1="0" VID2="0" VID4="0" VID6="0"/>
+                            </GPStrLine>
+                            <GPStrLine Count="1">
+                                <GPString VID7="봐주셔서" VID1="0" VID2="0" VID4="0" VID6="0"/>
+                            </GPStrLine>
+                            <GPStrLine Count="1">
+                                <GPString VID7="감사합니다~" VID1="0" VID2="0" VID4="0" VID6="0"/>
+                            </GPStrLine>
+                        </GPStrLineArr>
+                    </GPObject>
+                </GPObjectArr>
+            </CRCUnitArr>
+        </CROwneUnit>
+    </CROwneUnitArr>
+    <CRTrackArr Snap="1" Zoom="25" Length="18000">
+        <CRVideoTrackArr Count="2">
+            <CRTrackList Name="Master V1" State="104" Count="3">
+                <CRTrackClip Type="0" ClipIndex="-1" Pos="0" Length="2343" ClipLength="-1" Speed="-1" Reverse="0" Level="0" Mute="0"/>
+                <CRTrackClip Type="1" ClipIndex="1" Pos="0" Length="658" ClipLength="-1" Speed="1000" Reverse="0" Level="0" Mute="0"/>
+                <CRTrackClip Type="1" ClipIndex="2" Pos="0" Length="1819" ClipLength="-1" Speed="130" Reverse="0" Level="0" Mute="0"/>
+            </CRTrackList>
+            <CRTrackList Name="V2" State="100" Count="8">
+                <CRTrackClip Type="1" ClipIndex="0" Pos="36" Length="2343" ClipLength="-1" Speed="120" Reverse="0" Level="0" Mute="0"/>
+                <CRTrackClip Type="3" ClipIndex="0" Pos="0" Length="658" ClipLength="1040" Speed="-1" Reverse="0" Level="0" Mute="0"/>
+                <CRTrackClip Type="3" ClipIndex="1" Pos="0" Length="503" ClipLength="695" Speed="-1" Reverse="0" Level="0" Mute="0"/>
+                <CRTrackClip Type="3" ClipIndex="2" Pos="0" Length="457" ClipLength="457" Speed="-1" Reverse="0" Level="0" Mute="0"/>
+                <CRTrackClip Type="3" ClipIndex="3" Pos="0" Length="533" ClipLength="533" Speed="-1" Reverse="0" Level="0" Mute="0"/>
+                <CRTrackClip Type="0" ClipIndex="-1" Pos="153" Length="223" ClipLength="-1" Speed="-1" Reverse="0" Level="0" Mute="0"/>
+                <CRTrackClip Type="3" ClipIndex="4" Pos="0" Length="103" ClipLength="240" Speed="-1" Reverse="0" Level="0" Mute="0"/>
+                <CRTrackClip Type="3" ClipIndex="5" Pos="0" Length="579" ClipLength="579" Speed="-1" Reverse="0" Level="0" Mute="0"/>
+            </CRTrackList>
+        </CRVideoTrackArr>
+        <CRVideoEFTrackArr Count="2">
+            <CRTrackEFList State="0" Count="0"/>
+            <CRTrackEFList State="0" Count="0"/>
+        </CRVideoEFTrackArr>
+        <CRAudioTrackArr Count="1">
+            <CRTrackList Name="Master A1" State="105" Count="0"/>
+        </CRAudioTrackArr>
+        <CRBookmarkArr Count="2">
+            <CRBookmark Color="5490802" Value="2343"/>
+            <CRBookmark Color="5490802" Value="3504"/>
+        </CRBookmarkArr>
+    </CRTrackArr>
+</CROASTERP>
