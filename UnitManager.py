@@ -303,7 +303,6 @@ class UnitManager:
 
     def draw(self):
         self.cursorimage.clip_draw(132, 7, 52, 52, self.x + 10, self.y - 10, 26, 26)
-
         #gold
         x, y  = 1380, 530
         text = f'Gold: {self.gold}'

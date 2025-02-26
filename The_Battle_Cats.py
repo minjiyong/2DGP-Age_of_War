@@ -1,3 +1,7 @@
+import pico2d
+import os
+print(os.getenv('PYSDL2_DLL_PATH'))
+
 from pico2d import open_canvas, delay, close_canvas
 import game_framework
 
